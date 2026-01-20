@@ -1,0 +1,53 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(nflreadr)
+```
+```{r}
+# https://www.pro-football-reference.com/teams/crd/coaches.htm
+nfl_to_pfr <- c(
+  ARI = "CRD",
+  ATL = "ATL",
+  BAL = "RAV",
+  BUF = "BUF",
+  CAR = "CAR",
+  CHI = "CHI",
+  CIN = "CIN",
+  CLE = "CLE",
+  DAL = "DAL",
+  DEN = "DEN",
+  DET = "DET",
+  GB  = "GNB",
+  HOU = "HTX",
+  IND = "CLT",
+  JAX = "JAX",
+  KC  = "KAN",
+  LAC = "SDG",
+  LAR = "LAR",
+  LV  = "RAM",
+  MIA = "MIA",
+  MIN = "MIN",
+  NE  = "NWE",
+  NO  = "NOR",
+  NYG = "NYG",
+  NYJ = "NYJ",
+  PHI = "PHI",
+  PIT = "PIT",
+  SEA = "SEA",
+  SF  = "SFO",
+  TB  = "TAM",
+  TEN = "OTI",
+  WSH = "WAS"
+)
+
+# Example usage:
+nfl_to_pfr["GB"]   # returns "GNB"
+nfl_to_pfr["NE"]   # returns "NWE"
+
+```
+
