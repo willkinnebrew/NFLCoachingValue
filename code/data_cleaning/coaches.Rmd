@@ -5,9 +5,9 @@ output: html_notebook
 
 ```{r}
 library(tidyverse)
-library(nflfastR)
-library(nflreadr)
+library(rvest)
 ```
+
 ```{r}
 # https://www.pro-football-reference.com/teams/crd/coaches.htm
 nfl_to_pfr <- c(
@@ -49,5 +49,29 @@ nfl_to_pfr <- c(
 nfl_to_pfr["GB"]   # returns "GNB"
 nfl_to_pfr["NE"]   # returns "NWE"
 
+```
+
+```{r}
+#read data from the url
+
+cardinals <- read_html('https://www.pro-football-reference.com/teams/crd/coaches.htm') %>%
+  html_node('table#coaches_year') %>%
+  html_table(fill = TRUE)
+
+# scrape table headers
+cardinals_header <- read_html('https://www.pro-football-reference.com/teams/crd/coaches.htm')  %>% 
+  html_nodes('table#coaches_year thead tr th') %>% #note this time we are scraping the 'th' part, which contains table header
+  html_text()
+
+cardinals_header <- cardinals_header[-(1:4)]
+
+#convert a vector to a data frame
+cardinals <- data.frame(matrix(cardinals,ncol=length(cardinals_header),byrow=T),stringsAsFactors = F)
+# add table header
+colnames(cardinals)<- cardinals_header[1:length(cardinals_header)]
+
+
+# display dataset
+head(cardinals, 10)
 ```
 
