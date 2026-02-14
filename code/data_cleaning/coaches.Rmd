@@ -9,7 +9,8 @@ library(rvest)
 ```
 
 ```{r}
-# https://www.pro-football-reference.com/teams/crd/coaches.htm
+# gathering data about coaches from: https://www.pro-football-reference.com/teams/crd/coaches.htm
+# converting typical team ID's to their PFR page ID
 nfl_to_pfr <- c(
   ARI = "CRD",
   ATL = "ATL",
@@ -28,8 +29,8 @@ nfl_to_pfr <- c(
   JAX = "JAX",
   KC  = "KAN",
   LAC = "SDG",
-  LAR = "LAR",
-  LV  = "RAM",
+  LAR = "RAM",
+  LV  = "RAI",
   MIA = "MIA",
   MIN = "MIN",
   NE  = "NWE",
@@ -52,26 +53,56 @@ nfl_to_pfr["NE"]   # returns "NWE"
 ```
 
 ```{r}
-#read data from the url
 
-cardinals <- read_html('https://www.pro-football-reference.com/teams/crd/coaches.htm') %>%
-  html_node('table#coaches_year') %>%
-  html_table(fill = TRUE)
-
-# scrape table headers
-cardinals_header <- read_html('https://www.pro-football-reference.com/teams/crd/coaches.htm')  %>% 
-  html_nodes('table#coaches_year thead tr th') %>% #note this time we are scraping the 'th' part, which contains table header
-  html_text()
-
-cardinals_header <- cardinals_header[-(1:4)]
-
-#convert a vector to a data frame
-cardinals <- data.frame(matrix(cardinals,ncol=length(cardinals_header),byrow=T),stringsAsFactors = F)
-# add table header
-colnames(cardinals)<- cardinals_header[1:length(cardinals_header)]
+# initialize coaches dataframe
+coaches <- data.frame()
 
 
-# display dataset
-head(cardinals, 10)
+# parse through all teams
+for(team in nfl_to_pfr){
+  # create link to PFR coaches page for the team
+  link <- paste0('https://www.pro-football-reference.com/teams/', tolower(team), '/coaches.htm')
+
+  # get table data for team
+  team_coaches <- read_html(link) %>%
+    html_node('table#coaches_year') %>%
+    html_table(fill = TRUE)
+  
+  # get headers for the table
+  team_headers <- read_html(link)  %>% 
+    html_nodes('table#coaches_year thead tr th') %>% 
+    html_text()
+  
+  # remove redundant headers
+  team_headers <- team_headers[-(1:4)]
+  
+  # rename columns
+  colnames(team_coaches)<- team_headers[1:length(team_headers)]
+  
+  # create "team" column
+  team_coaches$team <- names(nfl_to_pfr)[which(nfl_to_pfr == team)]
+  
+  # add team's coaching history to primary dataframe
+  coaches <- coaches %>% 
+    bind_rows(team_coaches)
+}
+
+all_coaches <- coaches %>% 
+  filter(Year != "Year") %>%  # removing rows with header information that stuck with the df
+  mutate(Year = ifelse(Year == "", lag(Year), Year)) %>%  # accounting for several coaches in the same year
+  mutate(Year = ifelse(Year == "", lag(Year), Year)) %>%  # doing it again for 3 coaches
+  mutate(Year = ifelse(Year == "", lag(Year), Year))  # some teams had 4! wow!
+```
+
+```{r}
+dim(all_coaches) # we have 2394 coaches and 14 columns
+min(all_coaches$Year) # data goes back to 1920
+all_coaches %>% group_by(team, Year) %>% count %>% arrange(desc(n)) %>% head(1) %>% pull(n) # most HC in a season ever is 4, held by the 1961 Cardinals, who had three HC at once after firing their initial HC.
+
+```
+
+
+```{r}
+write.csv(all_coaches, "../../data/raw/coaches.csv")
 ```
 

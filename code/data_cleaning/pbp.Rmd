@@ -1,0 +1,19 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(nflreadr)
+```
+
+```{r}
+pbp <- load_pbp(seasons = 2015:2025)
+```
+
+```{r}
+write.csv(pbp, file = "../../data/raw/pbp.csv")
+```
+

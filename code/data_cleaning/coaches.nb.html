@@ -1754,18 +1754,10 @@ display: none;
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShydmVzdClcblxuYGBgIn0= -->
-<pre class="r"><code>library(rvest)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KHJ2ZXN0KVxuYGBgIn0= -->
+<pre class="r"><code>library(tidyverse)
+library(rvest)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhydmVzdOKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4zXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYcnZlc3TigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpyZWFkcuKAmTpcblxuICAgIGd1ZXNzX2VuY29kaW5nXG4ifQ== -->
-<pre><code>Warning: package ‘rvest’ was built under R version 4.4.3
-Attaching package: ‘rvest’
-
-The following object is masked from ‘package:readr’:
-
-    guess_encoding</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1825,18 +1817,70 @@ nfl_to_pfr[&quot;GB&quot;]   # returns &quot;GNB&quot;</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6MTMsInN1bW1hcnkiOnsiRGVzY3JpcHRpb24iOlsiZGYgWzEgw5cgMTNdIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQnUxY1MzZmJ1aEdXSER1cDlVamFjemQ5YkxqcEx0SGhtOUxTa21yNzJrNnVqK3pHdDB1WWdrd2VVNFFQU0ZsWCtmRzNCV1dSR0FrZzliQVVwNjBYUGh4OUhPQ2JHUXdHbEFDNjEvM1ZxUHhhS1pWS2IwcjcrK1hTbXdNbWxnNytlWDM4cVZrcTdlK3hEK1hTZnVrd3VmN0dsSDVpUXAzOS9UUzlVU3I5a2YwOXpoVDIvNFVSVFdWZDFTMGdtMEEyZ0t3RFdRT3l5bVd0QmVRbWtCMGcyMEFHdkJyZzFRQ3ZCbmcxd0tzQlhoWHdxb0JYQmJ3cTRGVUJyd3A0VmNDckFsNFY4S29wYnluRnRGYXJCZVFta0IwZzIwQzJnR3dDMlFDeURtUU55Q3FYbXkzUmxpYmdid0wrSnVCdkF2NG00RzhDL2liZ2J3TCtKdUIzSlB3TzRIY0F2d1A0SGNEdkFINEg4RHVBM3dIOER1QzNRZHh0d0dzRFhodncyb0RYQnJ3MjRMVUJyNjB0K0xkNFRYU0FQUmF3eHdMMldNQWVDOWhqQVhzc1lJOEY3TEdBUFZhZVBjazlZSWNwR1JjVDJHTUNlMHhnanduc01VMUpIOEF1RTlobGd2RXhnUjBHaUljQitBM0Fid0IrQS9BYklCNEc0RFVBcjdFWWp3UUQvRHJnMXdHL0R2aDF3SzhEZmgzdzY0QmZCL3c2OEp2VlFYbXRQZWdRNUhxekR4L09TSWhpRDRYS0NRcERFbTRHbndmK1lLQ2MrK0ZkZER1aWsyM0MxYXNZUDJMbHhnL3VveGxVYTlPUmk1VWo2cU53VjlqN2N4d3FONTRmNGRBYmhmR0xvTFV1RGtNL1VrNG94dUdhV0wyTFdOUSt1eWQrY210dHNQclZEMWxJcnNtdFg5aWpSRzlqcU5JZTlmc1RwVGRCK2NqaEdjRktlM1NIZzgyQitpa0s3NVh6a1JjTVdSS25JM0NDUTZ4Y3hTZ0lrZ1RjR2xvOTg0Y0tJL1FIbVE4N2htb1hpTkpKTW1HaWJJTFdXU0NuVThnUGw0RFZMZ21WRHFFVEhBUzdnTnJrVmprbFFUQkdrM3pvZmNkRE5NQ0pFMkdJNlk3UnlnMGJzb2x5Z1lmRFp5RzFqamR5NzVVdUhRVjhjdlhRUkxta3hQVlFkSTlTanhPUUJUNkljT3J4dTB2eW9Qejh1TkhIV3RKZHoyY1V0Qit0aXlXVDR5cWU5SkdYUFgvblltektJT3BuUzBmdDB2T0RKUG42UVJiTFdnZTdEUHc1dXVWalh1K01hQklwTkx6RmFGUUUxcDdtK3lXaTk3eEhDY3NIbHZYRENVdXQ4QnRPSnZGR3NOUjhDVlpuQXgyelpRbEh5YnpldVZYL29LR1BsUzlzemFQcElIMzQ3QWRzeWUxUTdOOTVNVjkxdHdHL3YwU2pRTGx5MmRvVGNWZmthUDBNc2Z6dWVQalJ2d3NuQlFaWGUyU2lISVY5aXNkUmdWcTlpOGRzTWw2NUtBd3lnMnJIRlBlVkV6WTdXTVN6MGpwaWtmS1NYS0VCWHkrK0VEcFUya20xeTBYcVIxUGFVMExIWUcyVWdjemxKUGU2MUk5Y2t1WHVhcWo4T2F0OE1oUDJzcSticTB2Mi80UlVUaDBxdDc0bnE1VkJta1ROV3JlN0l0dkxSZ1laRWpYemg1YktlcTZ3cCsxZWtyR3FSZnAyWWJlYXBKTmlTWHVHVkd5QmFFczUvYnBYNXZmRTNBRXV5cWpNd2pocGkxU0pXazV0dWxuTVgyNmZ1U2hJZXM2bW1LUzlJL0ZQRWc4cnQwK2cxTW9udGhaRHhnMjNGazNobWFZSnJWcENjMGRBQk4vRUlIRlMwVU1udjdtMWdxZU9nR1R1Q0hrRG9pL0xjelhmZnRGWlU3RE56amV5SlFnclZCbkpJSW82aGhBSHNXZE51S1VKd2dxa0lOTkZuN05iYXI1Z0NJSm9vbWlIT0lyV0NxM0VQQk5OTlJaMWdJZmlCR3hLRE1xcEh4ZENUUUxMWkVGZG02dE5nbGFCSllLVDBub25UbThuWDBtK1pCVGxnaEF5TUtNY29RY1FFVjF3VEx3bnBSYkhWaWdVTW9lS1NrNUwxQzVhT2lVOUdMbDlTZ1N4UW9pRlZ0UVJ4ejI3VlREOWhBNWxTNGxvbWF4bTVxL2JaWEUxRkIwUjYxQytSOFdQS1JJVzBkNkNGT1dtaUNra1BNVksxa2V4SmpuQ0xWM2dFbk1GVk1TY21uSzl3Z2dYQ0FYMWVaWFMvZjhzdkd6b3hJbTFtWkIxcUQvUEMxRjVyZmhzRnJIZHhWbDhoRmhsQ0FwaVdOQ1ArTFN6MWlnWGRKaFhOZlp2UGwzOFBaVWJHdC9WYlpoOGw3YWg4NTI4T2RubU80OE5LOXRKMzI4WTJXNGo2NVB2WU0vcG1IeTN0OUhrSndRYU50QzMrUTVld3dBNmMxeXdMZEMzN09YNmM3SURmTFRrK2liZjlXem9mQWUrb2ZHVERIUDlRQnRnbjNQOUFId3VQams2ZWJhcHNDM2ZpWjdyeCtRNzZjeCtUUjViR0RlRDYxaVdMZTF6THY2d2Z5TW5Kc0JPaDU4U2FUZ2duaEEzZEUwdXF5QlBORXVPODFNWHpIZGRyczkzOHhzT2lLMXRHcEkrRHpRUTZQd1BqRTREVTROdnhEYzBFQ0tOSDhxWVQ0TW1vTFpOYVZ1MUJVSmh5Rk1keXZvS3RzRitXcG84TEhPK2dEN1ZGV1RkZ1NFRk9OK0VuL01MeHNmSzZjZk9TWHRvRzR3dExCRjVVd1p5d1pnYk9mcE5mdWhpYnByQTZlRG84bEtaeEhiSkQrQ2xKZGRzQVZpbW1EVW9XR2NLQlBFeGRaVldtd2tGaStUTEN0dDYwRmhsOVg0VlhnTWxDRXQra1Y0Njk5VVZGWVhxc3VHd0dic1B5bXRtdkFxdktiRkdzVWgvZmw1NTdxOWZMRGI3eWVCNy9senkwbU96SzhOZUY4ei85a3o0b1lyRjJ4Nk9Sa0Y2cUhaWkFYaDNRYUpZdWVtc1dUY09wODA2SkJ4czFzOGZwdXBkLzNHdStWVjdUVE5XdlM3U2Jidi9kYThiUm4yWld6K2FteTkxclR4bHA0ZUdEMm0rM2lSbmN3SHcwaVp1ZXQzQUVYbVplUGZMWUlERENNOCsxcm9VajVWTEhIOERwejVYeEphWjhOZjJoREtyTC9BZ0h2dXU5MUg1N044blIrczdKRHNCZllvb0NmcktDU0g5Y1hiaWNWZG85WW5mRC9oWlR3a2tKTlUxNmZlVlV4UmtwNWhGNUMvVGJzN3B5UDJHN3o4cTU5aVBQYVZIeHRteHk2b0lIUjRGK0RmbGhsbVlHbjJHa3hQdFY2TWc4Qi81eXdISlVXYmxGM0RLWFVUcW54RjFsV3VLbzVnZnNYMHUyUFhkZStVTURYME1xSk56K01jb2lqQS8vSjY4TG5FVUo2ZnJDNkFuMTNvZUdlTG5ROHlHSzQ4TStOSDJiVUpTdjJzOTBsZTZaT3l4OGFNRjJLNW1mLzJDVGI0T29nODRqTG1sTXZDbDY5VHJkZHZYbkRMZXhiQ01WNzhrV2R0TFhzcUoxb0pxWDFIeWd0SVppZkNEdHdXc2NoUWtiN200WkhpYmxUVTB4SkhTeG5Ic2V2em8vUnBvZFZwdjIyUWNaRWZsSlZBbGVlL2psTkFZRkVvQmFiTktyN0Q2bFBrdkluL3FCTXl0Q1Z2cndqNm1keWlLditPTjJWdE5yQ0N6K3JNbTlqZUlmVlJrNzdISm1qM3pGVG9weUdwam1MeDdjRVpDWElUVmo2a2ZmMk1WZUVTSEk3bzJXRTFlMTdsRWtjdVc0alhuVmUwNElKTis4a0REWDlUNDh6VVpUblBQano0cU83aGY0ZmUzakVoZXRkb21KSHZscXpKZEo3OFN5Z2Rkb3ZXall5OWYzbCt2czJWdTdqOXBISVRKUWxCNld2UHFNeEQrOTR5NXQ3dXpIVmgrM2ovOTVUUTdiUWNQMEJUb3ovK0tzdkJsS1Z0MDU0MDlwR1RjU0EydWw1NFc2L0tpUjI3QW5wdG5IcVZncFk5aTFCaFExcFo5K24yaHlUdnlFUHVFUFVTWDlwSkhnTGNMamN0MEFmZ3dDaE1yK3A5Y2J4VGVmN0lYYnI5NVlOL2NHQ2MzRUJxYnlmVW5LL2IrUFd2K05vME1EdS84TUEzRlFZQnVzeThCYi9vNGZTNTV6Mkl4RFVYamdmclpLOTRWaGthTm1NUW9iVkp4U1pBaVU4OUx2LzhITUY1b0VHbEZBQUE9In0= -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Year"],"name":[1],"type":["list"],"align":["right"]},{"label":["Coach"],"name":[2],"type":["list"],"align":["right"]},{"label":["G"],"name":[3],"type":["list"],"align":["right"]},{"label":["W"],"name":[4],"type":["list"],"align":["right"]},{"label":["L"],"name":[5],"type":["list"],"align":["right"]},{"label":["T"],"name":[6],"type":["list"],"align":["right"]},{"label":["W-L%"],"name":[7],"type":["list"],"align":["right"]},{"label":["G"],"name":[8],"type":["list"],"align":["right"]},{"label":["W"],"name":[9],"type":["list"],"align":["right"]},{"label":["L"],"name":[10],"type":["list"],"align":["right"]},{"label":["Result"],"name":[11],"type":["list"],"align":["right"]},{"label":["Offense"],"name":[12],"type":["list"],"align":["right"]},{"label":["Defense"],"name":[13],"type":["list"],"align":["right"]}],"data":[{"1":"<chr [118]>","2":"<chr [118]>","3":"<chr [118]>","4":"<chr [118]>","5":"<chr [118]>","6":"<chr [118]>","7":"<chr [118]>","8":"<chr [118]>","9":"<chr [118]>","10":"<chr [118]>","11":"<chr [118]>","12":"<chr [118]>","13":"<chr [118]>","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10],"total":[13]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKHRlYW0gaW4gbmZsX3RvX3BmclsoMjY6MzIpXSl7XG4gIGxpbmsgPC0gcGFzdGUwKCdodHRwczovL3d3dy5wcm8tZm9vdGJhbGwtcmVmZXJlbmNlLmNvbS90ZWFtcy8nLCB0b2xvd2VyKHRlYW0pLCAnL2NvYWNoZXMuaHRtJylcblxuICB0ZWFtX2NvYWNoZXMgPC0gcmVhZF9odG1sKGxpbmspICU+JVxuICAgIGh0bWxfbm9kZSgndGFibGUjY29hY2hlc195ZWFyJykgJT4lXG4gICAgaHRtbF90YWJsZShmaWxsID0gVFJVRSlcbiAgXG4gIHRlYW1faGVhZGVycyA8LSByZWFkX2h0bWwobGluaykgICU+JSBcbiAgICBodG1sX25vZGVzKCd0YWJsZSNjb2FjaGVzX3llYXIgdGhlYWQgdHIgdGgnKSAlPiUgXG4gICAgaHRtbF90ZXh0KClcbiAgXG4gIHRlYW1faGVhZGVycyA8LSB0ZWFtX2hlYWRlcnNbLSgxOjQpXVxuICBjb2xuYW1lcyh0ZWFtX2NvYWNoZXMpPC0gdGVhbV9oZWFkZXJzWzE6bGVuZ3RoKHRlYW1faGVhZGVycyldXG4gIFxuICB0ZWFtX2NvYWNoZXMkdGVhbSA8LSBuYW1lcyhuZmxfdG9fcGZyKVt3aGljaChuZmxfdG9fcGZyID09IHRlYW0pXVxuICBcbiAgY29hY2hlcyA8LSBjb2FjaGVzICU+JSBcbiAgICBiaW5kX3Jvd3ModGVhbV9jb2FjaGVzKVxufVxuXG5gYGAifQ== -->
+<pre class="r"><code>for(team in nfl_to_pfr[(26:32)]){
+  link &lt;- paste0(&#39;https://www.pro-football-reference.com/teams/&#39;, tolower(team), &#39;/coaches.htm&#39;)
+
+  team_coaches &lt;- read_html(link) %&gt;%
+    html_node(&#39;table#coaches_year&#39;) %&gt;%
+    html_table(fill = TRUE)
+  
+  team_headers &lt;- read_html(link)  %&gt;% 
+    html_nodes(&#39;table#coaches_year thead tr th&#39;) %&gt;% 
+    html_text()
+  
+  team_headers &lt;- team_headers[-(1:4)]
+  colnames(team_coaches)&lt;- team_headers[1:length(team_headers)]
+  
+  team_coaches$team &lt;- names(nfl_to_pfr)[which(nfl_to_pfr == team)]
+  
+  coaches &lt;- coaches %&gt;% 
+    bind_rows(team_coaches)
+}
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTmV3IG5hbWVzOk5ldyBuYW1lczpOZXcgbmFtZXM6TmV3IG5hbWVzOk5ldyBuYW1lczpOZXcgbmFtZXM6TmV3IG5hbWVzOlxuIn0= -->
+<pre><code>New names:New names:New names:New names:New names:New names:New names:</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKGFsbF9jb2FjaGVzKSAjIHdlIGhhdmUgMjM5NCBjb2FjaGVzIGFuZCAxNCBjb2x1bW5zXG5gYGAifQ== -->
+<pre class="r"><code>dim(all_coaches) # we have 2394 coaches and 14 columns</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIzNjIgICAxNFxuIn0= -->
+<pre><code>[1] 2362   14</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWluKGFsbF9jb2FjaGVzJFllYXIpICMgZGF0YSBnb2VzIGJhY2sgdG8gMTkyMFxuYGBgIn0= -->
+<pre class="r"><code>min(all_coaches$Year) # data goes back to 1920</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiMTkyMFwiXG4ifQ== -->
+<pre><code>[1] &quot;1920&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYWxsX2NvYWNoZXMgJT4lIGdyb3VwX2J5KHRlYW0sIFllYXIpICU+JSBjb3VudCAlPiUgYXJyYW5nZShkZXNjKG4pKSAlPiUgaGVhZCgxKSAlPiUgcHVsbChuKSAjIG1vc3QgSEMgaW4gYSBzZWFzb24gZXZlciBpcyA0LCBoZWxkIGJ5IHRoZSAxOTYxIENhcmRpbmFscywgd2hvIGhhZCB0aHJlZSBIQyBhdCBvbmNlIGFmdGVyIGZpcmluZyB0aGVpciBpbml0aWFsIEhDLlxuYGBgIn0= -->
+<pre class="r"><code>all_coaches %&gt;% group_by(team, Year) %&gt;% count %&gt;% arrange(desc(n)) %&gt;% head(1) %&gt;% pull(n) # most HC in a season ever is 4, held by the 1961 Cardinals, who had three HC at once after firing their initial HC.</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDRcbiJ9 -->
+<pre><code>[1] 4</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KGFsbF9jb2FjaGVzLCBcImRhdGEvcHJvY2Vzc2VkL2NvYWNoZXMuY3N2XCIpXG5cbmBgYCJ9 -->
+<pre class="r"><code>write.csv(all_coaches, &quot;data/processed/coaches.csv&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogY2Fubm90IG9wZW4gZmlsZSAnZGF0YS9wcm9jZXNzZWQvY29hY2hlcy5jc3YnOiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5RXJyb3IgaW4gZmlsZShmaWxlLCBpZmVsc2UoYXBwZW5kLCBcImFcIiwgXCJ3XCIpKSA6IFxuICBjYW5ub3Qgb3BlbiB0aGUgY29ubmVjdGlvblxuIn0= -->
+<pre><code>Warning: cannot open file &#39;data/processed/coaches.csv&#39;: No such file or directoryError in file(file, ifelse(append, &quot;a&quot;, &quot;w&quot;)) : 
+  cannot open the connection</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShydmVzdCkNCmBgYA0KDQpgYGB7cn0NCiMgaHR0cHM6Ly93d3cucHJvLWZvb3RiYWxsLXJlZmVyZW5jZS5jb20vdGVhbXMvY3JkL2NvYWNoZXMuaHRtDQpuZmxfdG9fcGZyIDwtIGMoDQogIEFSSSA9ICJDUkQiLA0KICBBVEwgPSAiQVRMIiwNCiAgQkFMID0gIlJBViIsDQogIEJVRiA9ICJCVUYiLA0KICBDQVIgPSAiQ0FSIiwNCiAgQ0hJID0gIkNISSIsDQogIENJTiA9ICJDSU4iLA0KICBDTEUgPSAiQ0xFIiwNCiAgREFMID0gIkRBTCIsDQogIERFTiA9ICJERU4iLA0KICBERVQgPSAiREVUIiwNCiAgR0IgID0gIkdOQiIsDQogIEhPVSA9ICJIVFgiLA0KICBJTkQgPSAiQ0xUIiwNCiAgSkFYID0gIkpBWCIsDQogIEtDICA9ICJLQU4iLA0KICBMQUMgPSAiU0RHIiwNCiAgTEFSID0gIkxBUiIsDQogIExWICA9ICJSQU0iLA0KICBNSUEgPSAiTUlBIiwNCiAgTUlOID0gIk1JTiIsDQogIE5FICA9ICJOV0UiLA0KICBOTyAgPSAiTk9SIiwNCiAgTllHID0gIk5ZRyIsDQogIE5ZSiA9ICJOWUoiLA0KICBQSEkgPSAiUEhJIiwNCiAgUElUID0gIlBJVCIsDQogIFNFQSA9ICJTRUEiLA0KICBTRiAgPSAiU0ZPIiwNCiAgVEIgID0gIlRBTSIsDQogIFRFTiA9ICJPVEkiLA0KICBXU0ggPSAiV0FTIg0KKQ0KDQojIEV4YW1wbGUgdXNhZ2U6DQpuZmxfdG9fcGZyWyJHQiJdICAgIyByZXR1cm5zICJHTkIiDQpuZmxfdG9fcGZyWyJORSJdICAgIyByZXR1cm5zICJOV0UiDQoNCmBgYA0KDQpgYGB7cn0NCiNyZWFkIGRhdGEgZnJvbSB0aGUgdXJsDQoNCmNhcmRpbmFscyA8LSByZWFkX2h0bWwoJ2h0dHBzOi8vd3d3LnByby1mb290YmFsbC1yZWZlcmVuY2UuY29tL3RlYW1zL2NyZC9jb2FjaGVzLmh0bScpICU+JQ0KICBodG1sX25vZGUoJ3RhYmxlI2NvYWNoZXNfeWVhcicpICU+JQ0KICBodG1sX3RhYmxlKGZpbGwgPSBUUlVFKQ0KDQojIHNjcmFwZSB0YWJsZSBoZWFkZXJzDQpjYXJkaW5hbHNfaGVhZGVyIDwtIHJlYWRfaHRtbCgnaHR0cHM6Ly93d3cucHJvLWZvb3RiYWxsLXJlZmVyZW5jZS5jb20vdGVhbXMvY3JkL2NvYWNoZXMuaHRtJykgICU+JSANCiAgaHRtbF9ub2RlcygndGFibGUjY29hY2hlc195ZWFyIHRoZWFkIHRyIHRoJykgJT4lICNub3RlIHRoaXMgdGltZSB3ZSBhcmUgc2NyYXBpbmcgdGhlICd0aCcgcGFydCwgd2hpY2ggY29udGFpbnMgdGFibGUgaGVhZGVyDQogIGh0bWxfdGV4dCgpDQoNCmNhcmRpbmFsc19oZWFkZXIgPC0gY2FyZGluYWxzX2hlYWRlclstKDE6NCldDQoNCiNjb252ZXJ0IGEgdmVjdG9yIHRvIGEgZGF0YSBmcmFtZQ0KY2FyZGluYWxzIDwtIGRhdGEuZnJhbWUobWF0cml4KGNhcmRpbmFscyxuY29sPWxlbmd0aChjYXJkaW5hbHNfaGVhZGVyKSxieXJvdz1UKSxzdHJpbmdzQXNGYWN0b3JzID0gRikNCiMgYWRkIHRhYmxlIGhlYWRlcg0KY29sbmFtZXMoY2FyZGluYWxzKTwtIGNhcmRpbmFsc19oZWFkZXJbMTpsZW5ndGgoY2FyZGluYWxzX2hlYWRlcildDQoNCg0KIyBkaXNwbGF5IGRhdGFzZXQNCmhlYWQoY2FyZGluYWxzLCAxMCkNCmBgYA0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShydmVzdCkNCmBgYA0KDQpgYGB7cn0NCiMgZ2F0aGVyaW5nIGRhdGEgYWJvdXQgY29hY2hlcyBmcm9tOiBodHRwczovL3d3dy5wcm8tZm9vdGJhbGwtcmVmZXJlbmNlLmNvbS90ZWFtcy9jcmQvY29hY2hlcy5odG0NCiMgY29udmVydGluZyB0eXBpY2FsIHRlYW0gSUQncyB0byB0aGVpciBQRlIgcGFnZSBJRA0KbmZsX3RvX3BmciA8LSBjKA0KICBBUkkgPSAiQ1JEIiwNCiAgQVRMID0gIkFUTCIsDQogIEJBTCA9ICJSQVYiLA0KICBCVUYgPSAiQlVGIiwNCiAgQ0FSID0gIkNBUiIsDQogIENISSA9ICJDSEkiLA0KICBDSU4gPSAiQ0lOIiwNCiAgQ0xFID0gIkNMRSIsDQogIERBTCA9ICJEQUwiLA0KICBERU4gPSAiREVOIiwNCiAgREVUID0gIkRFVCIsDQogIEdCICA9ICJHTkIiLA0KICBIT1UgPSAiSFRYIiwNCiAgSU5EID0gIkNMVCIsDQogIEpBWCA9ICJKQVgiLA0KICBLQyAgPSAiS0FOIiwNCiAgTEFDID0gIlNERyIsDQogIExBUiA9ICJSQU0iLA0KICBMViAgPSAiUkFJIiwNCiAgTUlBID0gIk1JQSIsDQogIE1JTiA9ICJNSU4iLA0KICBORSAgPSAiTldFIiwNCiAgTk8gID0gIk5PUiIsDQogIE5ZRyA9ICJOWUciLA0KICBOWUogPSAiTllKIiwNCiAgUEhJID0gIlBISSIsDQogIFBJVCA9ICJQSVQiLA0KICBTRUEgPSAiU0VBIiwNCiAgU0YgID0gIlNGTyIsDQogIFRCICA9ICJUQU0iLA0KICBURU4gPSAiT1RJIiwNCiAgV1NIID0gIldBUyINCikNCg0KIyBFeGFtcGxlIHVzYWdlOg0KbmZsX3RvX3BmclsiR0IiXSAgICMgcmV0dXJucyAiR05CIg0KbmZsX3RvX3BmclsiTkUiXSAgICMgcmV0dXJucyAiTldFIg0KDQpgYGANCg0KYGBge3J9DQoNCiMgaW5pdGlhbGl6ZSBjb2FjaGVzIGRhdGFmcmFtZQ0KY29hY2hlcyA8LSBkYXRhLmZyYW1lKCkNCg0KDQojIHBhcnNlIHRocm91Z2ggYWxsIHRlYW1zDQpmb3IodGVhbSBpbiBuZmxfdG9fcGZyKXsNCiAgIyBjcmVhdGUgbGluayB0byBQRlIgY29hY2hlcyBwYWdlIGZvciB0aGUgdGVhbQ0KICBsaW5rIDwtIHBhc3RlMCgnaHR0cHM6Ly93d3cucHJvLWZvb3RiYWxsLXJlZmVyZW5jZS5jb20vdGVhbXMvJywgdG9sb3dlcih0ZWFtKSwgJy9jb2FjaGVzLmh0bScpDQoNCiAgIyBnZXQgdGFibGUgZGF0YSBmb3IgdGVhbQ0KICB0ZWFtX2NvYWNoZXMgPC0gcmVhZF9odG1sKGxpbmspICU+JQ0KICAgIGh0bWxfbm9kZSgndGFibGUjY29hY2hlc195ZWFyJykgJT4lDQogICAgaHRtbF90YWJsZShmaWxsID0gVFJVRSkNCiAgDQogICMgZ2V0IGhlYWRlcnMgZm9yIHRoZSB0YWJsZQ0KICB0ZWFtX2hlYWRlcnMgPC0gcmVhZF9odG1sKGxpbmspICAlPiUgDQogICAgaHRtbF9ub2RlcygndGFibGUjY29hY2hlc195ZWFyIHRoZWFkIHRyIHRoJykgJT4lIA0KICAgIGh0bWxfdGV4dCgpDQogIA0KICAjIHJlbW92ZSByZWR1bmRhbnQgaGVhZGVycw0KICB0ZWFtX2hlYWRlcnMgPC0gdGVhbV9oZWFkZXJzWy0oMTo0KV0NCiAgDQogICMgcmVuYW1lIGNvbHVtbnMNCiAgY29sbmFtZXModGVhbV9jb2FjaGVzKTwtIHRlYW1faGVhZGVyc1sxOmxlbmd0aCh0ZWFtX2hlYWRlcnMpXQ0KICANCiAgIyBjcmVhdGUgInRlYW0iIGNvbHVtbg0KICB0ZWFtX2NvYWNoZXMkdGVhbSA8LSBuYW1lcyhuZmxfdG9fcGZyKVt3aGljaChuZmxfdG9fcGZyID09IHRlYW0pXQ0KICANCiAgIyBhZGQgdGVhbSdzIGNvYWNoaW5nIGhpc3RvcnkgdG8gcHJpbWFyeSBkYXRhZnJhbWUNCiAgY29hY2hlcyA8LSBjb2FjaGVzICU+JSANCiAgICBiaW5kX3Jvd3ModGVhbV9jb2FjaGVzKQ0KfQ0KDQphbGxfY29hY2hlcyA8LSBjb2FjaGVzICU+JSANCiAgZmlsdGVyKFllYXIgIT0gIlllYXIiKSAlPiUgICMgcmVtb3Zpbmcgcm93cyB3aXRoIGhlYWRlciBpbmZvcm1hdGlvbiB0aGF0IHN0dWNrIHdpdGggdGhlIGRmDQogIG11dGF0ZShZZWFyID0gaWZlbHNlKFllYXIgPT0gIiIsIGxhZyhZZWFyKSwgWWVhcikpICU+JSAgIyBhY2NvdW50aW5nIGZvciBzZXZlcmFsIGNvYWNoZXMgaW4gdGhlIHNhbWUgeWVhcg0KICBtdXRhdGUoWWVhciA9IGlmZWxzZShZZWFyID09ICIiLCBsYWcoWWVhciksIFllYXIpKSAlPiUgICMgZG9pbmcgaXQgYWdhaW4gZm9yIDMgY29hY2hlcw0KICBtdXRhdGUoWWVhciA9IGlmZWxzZShZZWFyID09ICIiLCBsYWcoWWVhciksIFllYXIpKSAgIyBzb21lIHRlYW1zIGhhZCA0ISB3b3chDQpgYGANCg0KYGBge3J9DQpkaW0oYWxsX2NvYWNoZXMpICMgd2UgaGF2ZSAyMzk0IGNvYWNoZXMgYW5kIDE0IGNvbHVtbnMNCm1pbihhbGxfY29hY2hlcyRZZWFyKSAjIGRhdGEgZ29lcyBiYWNrIHRvIDE5MjANCmFsbF9jb2FjaGVzICU+JSBncm91cF9ieSh0ZWFtLCBZZWFyKSAlPiUgY291bnQgJT4lIGFycmFuZ2UoZGVzYyhuKSkgJT4lIGhlYWQoMSkgJT4lIHB1bGwobikgIyBtb3N0IEhDIGluIGEgc2Vhc29uIGV2ZXIgaXMgNCwgaGVsZCBieSB0aGUgMTk2MSBDYXJkaW5hbHMsIHdobyBoYWQgdGhyZWUgSEMgYXQgb25jZSBhZnRlciBmaXJpbmcgdGhlaXIgaW5pdGlhbCBIQy4NCg0KYGBgDQoNCg0KYGBge3J9DQp3cml0ZS5jc3YoYWxsX2NvYWNoZXMsICIuLi8uLi9kYXRhL3Jhdy9jb2FjaGVzLmNzdiIpDQpgYGANCg0K</div>
 
 
 
