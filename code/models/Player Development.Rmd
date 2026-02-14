@@ -1,0 +1,69 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(nflfastR)
+library(nflreadr)
+```
+
+```{r}
+apm23 <- read.csv("../../data/processed/player_apm2023.csv")
+apm24 <- read.csv("../../data/processed/player_apm2024.csv")
+```
+
+```{r}
+apm23 <- apm23 %>% 
+  mutate(season = 2023)
+
+apm24 <- apm24 %>% 
+  mutate(season = 2024)
+```
+
+```{r}
+players_pfr <- load_players(file_type = getOption("nflreadr.prefer", default = "rds")) %>% 
+  select(pfr_id, nfl_id = gsis_id)
+
+snaps23 <- nflreadr::load_snap_counts(2023) %>% 
+  mutate(n_snaps = offense_snaps + defense_snaps + st_snaps) %>% 
+  group_by(pfr_player_id) %>% 
+  summarise(n_snaps = sum(n_snaps)) %>% 
+  left_join(players_pfr, by = c("pfr_player_id" = "pfr_id"))
+
+snaps24 <- nflreadr::load_snap_counts(2024) %>% 
+  mutate(n_snaps = offense_snaps + defense_snaps + st_snaps) %>% 
+  group_by(pfr_player_id) %>% 
+  summarise(n_snaps = sum(n_snaps)) %>% 
+  left_join(players_pfr, by = c("pfr_player_id" = "pfr_id"))
+
+```
+
+```{r}
+apm23 <- apm23 %>% 
+  left_join(snaps23 %>% select(nfl_id, n_snaps))
+
+apm24 <- apm24 %>% 
+  left_join(snaps24 %>% select(nfl_id, n_snaps))
+```
+
+```{r}
+apm_test <- apm23 %>% 
+  left_join(apm24, by = c("nfl_id"), suffix = c("2023", "2024")) %>% 
+  mutate(apm_diff = apm2024 - apm2023)
+```
+
+```{r}
+coaches <- read.csv("../../data/raw/coaches.csv")
+```
+
+
+```{r}
+apm_test %>% 
+  mutate(team2024 = ifelse(team2024 == "WAS", "WSH", ifelse(team2024 == "LA", "LAR", team2024))) %>% 
+  group_by(team2024) %>% 
+  summarise(apm_diff = sum(apm_diff)) %>% 
+  arrange(desc(apm_diff)) %>% 
+  left_join(coaches %>% filter(Year == 2024) %>% select(Coach, Offense, Defense, team), by = c("team2024" = "team"))
+```
+

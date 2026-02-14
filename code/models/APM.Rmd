@@ -12,9 +12,11 @@ library(stringr)
 ```
 
 ```{r}
-data <- load_pbp(2024)
+year <- 2023
 
-part <- load_participation(2024)
+data <- load_pbp(year)
+
+part <- load_participation(year)
 
 pbp22 <- data %>%
   inner_join(
@@ -169,7 +171,7 @@ player_apm <- player_index %>%
 ```
 
 ```{r}
-players <- load_rosters(2024)
+players <- load_rosters(year)
 ```
 
 ```{r}
@@ -179,7 +181,7 @@ player_apm_names <- player_apm %>%
 ```
 
 ```{r}
-write.csv(player_apm_names, file = "../../data/processed/player_apm2024.csv")
+write.csv(player_apm_names, file = paste0("../../data/processed/player_apm", year, ".csv"))
 ```
 
 
