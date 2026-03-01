@@ -1,0 +1,29 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(nflreadr)
+```
+
+```{r}
+records <- read.csv("../../data/processed/team_records.csv")
+```
+
+```{r}
+division_success <- records %>% 
+  mutate(division_win_pct = div_wins / (div_wins + div_losses + div_ties)) %>% 
+  # correcting it to a 0-1 scale
+  mutate(division_win_percentile = percent_rank(division_win_pct),
+         division_win_percentile = division_win_percentile/max(division_win_percentile)) %>% 
+  select(season, team, coach, offense, defense, div_wins, division_win_pct, division_win_percentile)
+```
+
+```{r}
+write.csv(division_success, "../../data/processed/division_game_success.csv")
+```
+
+

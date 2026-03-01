@@ -1,0 +1,28 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(nflreadr)
+```
+
+```{r}
+records <- read.csv("../../data/processed/team_records.csv")
+```
+
+```{r}
+reg_success <- records %>% 
+  mutate(win_pct = reg_wins / (reg_wins + reg_losses + reg_ties)) %>% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %>% 
+  mutate(win_percentile = percent_rank(win_pct)) %>% 
+  select(season, team, coach, offense, defense, win_pct, win_percentile)
+```
+
+```{r}
+write.csv(reg_success, "../../data/processed/regular_season_success.csv")
+```
+
