@@ -12,13 +12,12 @@ library(nflreadr)
 ```{r}
 pbp <- read.csv("../../data/raw/pbp.csv")
 coaches <- read.csv("../../data/raw/coaches.csv")
-
 ```
 
 ```{r}
-fourth_downs <- pbp %>% 
-  filter(down == 4) %>% 
-  filter(!(play_type %in% c("qb_kneel", "no_play", NA))) %>% 
+two_minute <- pbp %>% 
+  filter(half_seconds_remaining < 120) %>% 
+  filter(!(play_type %in% c("qb_kneel", "no_play", NA, "kickoff"))) %>% 
   mutate(home_ball = home_team == posteam) %>% 
   mutate(wp_change = home_wp_post - home_wp,
          wp_change = ifelse(home_ball, wp_change, -wp_change)) %>% 
@@ -31,7 +30,7 @@ fourth_downs <- pbp %>%
 ```
 
 ```{r}
-aggressiveness_score <- fourth_downs %>% 
+two_minute_score <- two_minute %>% 
   select(season, team = posteam, wp_total, wp_percentile) %>% 
   distinct() %>% 
   mutate(team = case_when(
@@ -47,7 +46,7 @@ aggressiveness_score <- fourth_downs %>%
 ```
 
 ```{r}
-write.csv(aggressiveness_score, "../../data/processed/aggressiveness_score.csv")
+write.csv(two_minute_score, "../../data/processed/two_minute_score.csv")
 
 ```
 
