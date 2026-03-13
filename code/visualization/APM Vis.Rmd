@@ -1,0 +1,53 @@
+---
+title: "APM Vis"
+author: "Will Kinnebrew"
+date: "2026-03-13"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(nflreadr)
+```
+
+```{r}
+folder <- "../../data/processed/"
+
+files <- list.files(folder, pattern = "^player_apm_.*\\.csv$", full.names = TRUE)
+
+years <- c()
+
+# loop through files and create a data frame for each one
+player_apm_all <- data.frame()
+for (file in files) {
+  df_name <- tools::file_path_sans_ext(basename(file))
+  player_apm_all <- player_apm_all %>% 
+    bind_rows(assign(df_name, read.csv(file)))
+
+  year <- as.numeric(sub("player_apm_", "", df_name))
+  years <- c(years, year)
+}
+```
+
+```{r}
+player_apm_all %>% 
+  ggplot(aes(x = apm)) +
+  geom_histogram(
+    binwidth = 0.0005,              # adjust to your data range
+    fill = "#1f77b4",            # nice blue fill
+    color = "white",              # white borders
+    alpha = 0.9                   # slightly transparent
+  ) +
+  labs(
+    title = "Distribution of Player APM",
+    x = "Adjusted Plus-Minus (APM)",
+    y = "Count"
+  ) +
+  theme_minimal(base_size = 14) +  # clean theme with readable text
+  theme(
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    axis.title = element_text(face = "bold")
+  )
+```
+

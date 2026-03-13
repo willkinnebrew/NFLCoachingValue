@@ -44,7 +44,7 @@ scores <- team_seasons %>%
 
 ```{r}
 # best coaches since x year
-scores %>% 
+best_coaches <- scores %>% 
   filter(season > 2015) %>% 
   pivot_longer(
     cols = c(coach, offense, defense),
@@ -57,7 +57,7 @@ scores %>%
   # Assign weight by role
   mutate(score_weighted = case_when(
     role == "coach"   ~ score,      # head coach full score
-    role %in% c("offense", "defense") ~ score * 0.5,  # assistants get half
+    role %in% c("offense", "defense") ~ score * 0.25,  # assistants get half
     TRUE ~ score
   )) %>% 
   group_by(coach_name) %>% 
@@ -69,20 +69,29 @@ scores %>%
   arrange(desc(total_score)) %>% 
   mutate(rank = row_number()) %>% 
   select(rank, coach_name, seasons, total_score)
+
+best_coaches
 ```
 
 ```{r}
 # best coaching seasons since 2015
-scores %>% 
-  filter(season > 2015) %>% 
+best_seasons <- scores %>% 
+  filter(season > 2016) %>% 
   group_by(season, team, coach, offense, defense) %>% 
   summarise(score = mean(score)) %>% 
   ungroup() %>% 
   arrange(desc(score)) %>% 
   mutate(rank = row_number()) %>% 
   select(rank, season, team, score, everything())
+
+best_seasons
 ```
 
 
+```{r}
+write.csv(best_coaches, "../../data/processed/total_coach_scores.csv")
+write.csv(best_seasons, "../../data/processed/best_season_scores.csv")
+write.csv(scores, "../../data/processed/season_scores.csv")
 
+```
 
