@@ -9,89 +9,7 @@ library(nflfastR)
 library(nflreadr)
 library(Matrix)
 library(stringr)
-```
-
-```{r}
-year <- 2023
-
-data <- load_pbp(year)
-
-part <- load_participation(year)
-
-pbp22 <- data %>%
-  inner_join(
-    part,
-    by = c("game_id" = "nflverse_game_id", "play_id")
-  )
-
-
-pbp22 <- pbp22 %>%
-  mutate(
-    off_list = str_split(offense_players, ";"),
-    def_list = str_split(defense_players, ";")
-  )
-  
-```
-
-```{r}
-apm_long <- pbp22 %>%
-  select(game_id, play_id, epa, off_list, def_list) %>%
-  unnest(off_list) %>%
-  mutate(
-    nfl_id = off_list,
-    sign = 1
-  ) %>%
-  select(game_id, play_id, epa, nfl_id, sign) %>%
-  bind_rows(
-    pbp22 %>%
-      select(game_id, play_id, epa, def_list) %>%
-      unnest(def_list) %>%
-      mutate(
-        nfl_id = def_list,
-        sign = -1
-      ) %>%
-      select(game_id, play_id, epa, nfl_id, sign)
-  )
-
-```
-
-
-```{r}
-apm_long %>%
-  count(game_id, play_id) %>%
-  count(n)
-
-```
-
-```{r}
-player_index <- apm_long %>%
-  distinct(nfl_id) %>%
-  arrange(nfl_id) %>%
-  mutate(player_idx = row_number())
-
-apm_long <- apm_long %>%
-  left_join(player_index, by = "nfl_id")
-
-play_index <- apm_long %>%
-  distinct(game_id, play_id) %>%
-  arrange(game_id, play_id) %>%
-  mutate(play_idx = row_number())
-
-apm_long <- apm_long %>%
-  left_join(play_index, by = c("game_id", "play_id"))
-
-X <- sparseMatrix(
-  i = apm_long$play_idx,
-  j = apm_long$player_idx,
-  x = apm_long$sign,
-  dims = c(nrow(play_index), nrow(player_index))
-)
-
-y <- pbp22 %>%
-  distinct(game_id, play_id, epa) %>%
-  arrange(game_id, play_id) %>%
-  pull(epa)
-
+library(rstan)
 ```
 
 ```{r}
@@ -122,19 +40,88 @@ model {
 }
 "
 
-```
-
-```{r}
-library(rstan)
 
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
 
 stan_model <- stan_model(model_code = stan_code)
-
 ```
 
 ```{r}
+years <- 2016:2025
+
+for (year in years){
+data <- load_pbp(year)
+
+part <- load_participation(year)
+
+pbp22 <- data %>%
+  inner_join(
+    part,
+    by = c("game_id" = "nflverse_game_id", "play_id")
+  )
+
+
+pbp22 <- pbp22 %>%
+  mutate(
+    off_list = str_split(offense_players, ";"),
+    def_list = str_split(defense_players, ";")
+  ) %>% 
+  filter(!is.na(epa))
+  
+apm_long <- pbp22 %>%
+  select(game_id, play_id, epa, off_list, def_list) %>%
+  unnest(off_list) %>%
+  mutate(
+    nfl_id = off_list,
+    sign = 1
+  ) %>%
+  select(game_id, play_id, epa, nfl_id, sign) %>%
+  bind_rows(
+    pbp22 %>%
+      select(game_id, play_id, epa, def_list) %>%
+      unnest(def_list) %>%
+      mutate(
+        nfl_id = def_list,
+        sign = -1
+      ) %>%
+      select(game_id, play_id, epa, nfl_id, sign)
+  )
+
+apm_long %>%
+  count(game_id, play_id) %>%
+  count(n)
+
+player_index <- apm_long %>%
+  distinct(nfl_id) %>%
+  arrange(nfl_id) %>%
+  mutate(player_idx = row_number())
+
+apm_long <- apm_long %>%
+  left_join(player_index, by = "nfl_id")
+
+play_index <- apm_long %>%
+  distinct(game_id, play_id) %>%
+  arrange(game_id, play_id) %>%
+  mutate(play_idx = row_number())
+
+apm_long <- apm_long %>%
+  left_join(play_index, by = c("game_id", "play_id"))
+
+X <- sparseMatrix(
+  i = apm_long$play_idx,
+  j = apm_long$player_idx,
+  x = apm_long$sign,
+  dims = c(nrow(play_index), nrow(player_index))
+)
+
+y <- pbp22 %>%
+  distinct(game_id, play_id, epa) %>%
+  arrange(game_id, play_id) %>%
+  pull(epa)
+
+
+
 stan_data <- list(
   N = nrow(X),
   P = ncol(X),
@@ -153,10 +140,6 @@ fit <- sampling(
   control = list(adapt_delta = 0.9)
 )
 
-
-```
-
-```{r}
 post <- rstan::extract(fit)
 beta_mean <- colMeans(post$beta)
 beta_sd   <- apply(post$beta, 2, sd)
@@ -168,33 +151,14 @@ player_apm <- player_index %>%
     apm_per_play = apm / 11
   )
 
-```
-
-```{r}
 players <- load_rosters(year)
-```
 
-```{r}
 player_apm_names <- player_apm %>% 
-  left_join(players %>% select(nfl_id = gsis_id, full_name, team, position), by = c("nfl_id")) %>% 
+  left_join(players %>% select(nfl_id = gsis_id, full_name, team, position, season), by = c("nfl_id")) %>% 
   arrange(desc(apm))
+
+write.csv(player_apm_names, file = paste0("../../data/processed/player_apm_", year, ".csv"))
+}
 ```
 
-```{r}
-write.csv(player_apm_names, file = paste0("../../data/processed/player_apm", year, ".csv"))
-```
-
-
-```{r}
-player_apm_names %>% 
-  group_by(position) %>% 
-  summarise(apm = mean(apm)) %>% 
-  arrange(desc(apm))
-```
-
-```{r}
-player_apm_names %>% 
-  filter(position == "RB") %>% 
-  arrange(desc(apm_per_play))
-```
 
