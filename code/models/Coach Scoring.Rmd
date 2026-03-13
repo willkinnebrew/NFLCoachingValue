@@ -29,6 +29,65 @@ team_seasons <- coaches %>%
 
 ```{r}
 scores <- team_seasons %>% 
-  left_join(regular_season_score %>% select(season, team, win_percentile))
+  left_join(regular_season_score %>% select(season, team, coach, win_percentile)) %>% 
+  left_join(postseason_score %>% select(season, team, coach, playoff_percentile)) %>% 
+  left_join(close_game_score %>% select(season, team, coach, close_win_percentile)) %>% 
+  left_join(aggressiveness_score %>% select(season, team, coach, aggressiveness_percentile = wp_percentile)) %>% 
+  left_join(two_minute_score %>% select(season, team, coach, two_minute_percentile = wp_percentile)) %>% 
+  left_join(division_game_score %>% select(season, team, coach, division_win_percentile)) %>% 
+  rowwise() %>%
+  mutate(score = sum(c_across(6:last_col()))) %>%
+  ungroup()
 ```
+
+```{r}
+# best coaches since x year
+scores %>% 
+  filter(season > 2015) %>% 
+  pivot_longer(
+    cols = c(coach, offense, defense),
+    names_to = "role",
+    values_to = "coach_name"
+  ) %>% 
+  separate_rows(coach_name, sep = ",") %>% 
+  mutate(coach_name = str_trim(coach_name)) %>% 
+  filter(!is.na(coach_name), coach_name != "") %>% 
+  group_by(coach_name) %>% 
+  summarise(
+    seasons = n(),
+    score = sum(score),
+    .groups = "drop"
+  ) %>% 
+  arrange(desc(score)) %>% 
+  mutate(rank = row_number()) %>% 
+  select(rank, coach_name, seasons, score)
+```
+
+```{r}
+# best coaching seasons since 2015
+scores %>% 
+  filter(season > 2015) %>% 
+  group_by(season, team, coach, offense, defense) %>% 
+  summarise(score = mean(score)) %>% 
+  ungroup() %>% 
+  arrange(desc(score)) %>% 
+  mutate(rank = row_number()) %>% 
+  select(rank, season, team, score, everything())
+```
+
+```{r}
+options <- c(0,1,2,8,9)
+df <- data.frame(fear = sample(options, 100, replace = TRUE))
+df2 <- df %>% 
+  mutate(fear = case_when(
+    fear == 0 ~ NA,
+    fear == 1 ~ 1,
+    fear == 2 ~ 0,
+    fear == 8 ~ NA,
+    fear == 9 ~ NA
+  ))
+
+dfs <- data.frame(df, df2)
+```
+
 

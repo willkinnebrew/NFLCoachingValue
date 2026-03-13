@@ -1,0 +1,172 @@
+---
+title: "APM New"
+author: "Will Kinnebrew"
+date: "2026-03-13"
+output: html_document
+---
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(nflreadr)
+library(Matrix)
+library(stringr)
+library(rstan)
+
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+
+stan_code <- "
+data {
+  int<lower=1> N;
+  int<lower=1> P;
+  matrix[N, P] X;
+  vector[N] y;
+}
+parameters {
+  real alpha;
+  vector[P] beta;
+  real<lower=0> sigma;
+  real<lower=0> tau;
+}
+model {
+  alpha ~ normal(0, 0.5);
+  tau   ~ normal(0, 0.5);
+  beta  ~ normal(0, tau);
+  sigma ~ normal(0, 1);
+
+  y ~ normal(alpha + X * beta, sigma);
+}
+"
+
+stan_model <- stan_model(model_code = stan_code)
+```
+
+```{r}
+run_apm_year <- function(year){
+
+  cat("Running year:", year, "\n")
+
+  tryCatch({
+
+    data <- load_pbp(year)
+    part <- load_participation(year)
+
+    pbp <- data %>%
+      inner_join(
+        part,
+        by = c("game_id" = "nflverse_game_id", "play_id")
+      ) %>%
+      mutate(
+        off_list = str_split(offense_players, ";"),
+        def_list = str_split(defense_players, ";")
+      )
+
+    apm_long <- pbp %>%
+      select(game_id, play_id, epa, off_list, def_list) %>%
+      unnest(off_list) %>%
+      mutate(
+        nfl_id = off_list,
+        sign = 1
+      ) %>%
+      select(game_id, play_id, epa, nfl_id, sign) %>%
+      bind_rows(
+        pbp %>%
+          select(game_id, play_id, epa, def_list) %>%
+          unnest(def_list) %>%
+          mutate(
+            nfl_id = def_list,
+            sign = -1
+          ) %>%
+          select(game_id, play_id, epa, nfl_id, sign)
+      )
+
+    player_index <- apm_long %>%
+      distinct(nfl_id) %>%
+      arrange(nfl_id) %>%
+      mutate(player_idx = row_number())
+
+    apm_long <- apm_long %>%
+      left_join(player_index, by = "nfl_id")
+
+    play_index <- apm_long %>%
+      distinct(game_id, play_id) %>%
+      arrange(game_id, play_id) %>%
+      mutate(play_idx = row_number())
+
+    apm_long <- apm_long %>%
+      left_join(play_index, by = c("game_id", "play_id"))
+
+    X <- sparseMatrix(
+      i = apm_long$play_idx,
+      j = apm_long$player_idx,
+      x = apm_long$sign,
+      dims = c(nrow(play_index), nrow(player_index))
+    )
+
+    y <- pbp %>%
+      distinct(game_id, play_id, epa) %>%
+      arrange(game_id, play_id) %>%
+      pull(epa)
+
+    stan_data <- list(
+      N = nrow(X),
+      P = ncol(X),
+      X = as.matrix(X),
+      y = y
+    )
+
+    fit <- sampling(
+      stan_model,
+      data = stan_data,
+      chains = 4,
+      iter = 1000,
+      warmup = 500,
+      refresh = 0,
+      control = list(adapt_delta = 0.9)
+    )
+
+    post <- rstan::extract(fit)
+
+    beta_mean <- colMeans(post$beta)
+    beta_sd <- apply(post$beta, 2, sd)
+
+    player_apm <- player_index %>%
+      mutate(
+        apm = beta_mean,
+        apm_sd = beta_sd,
+        apm_per_play = apm / 11
+      )
+
+    players <- load_rosters(year)
+
+    player_apm_names <- player_apm %>%
+      left_join(
+        players %>% 
+          select(nfl_id = gsis_id, full_name, team, position),
+        by = "nfl_id"
+      ) %>%
+      arrange(desc(apm))
+
+    write.csv(
+      player_apm_names,
+      file = paste0("../../data/processed/player_apm_", year, ".csv"),
+      row.names = FALSE
+    )
+
+    cat("Finished:", year, "\n")
+
+  }, error = function(e){
+
+    cat("FAILED YEAR:", year, "\n")
+    cat("Reason:", e$message, "\n\n")
+
+  })
+}
+```
+
+```{r}
+years <- 2015:2025
+
+purrr::walk(years, run_apm_year)
+```
+
