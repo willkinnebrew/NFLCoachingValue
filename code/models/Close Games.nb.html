@@ -1770,18 +1770,21 @@ library(nflreadr)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xvc2Vfc3VjY2VzcyA8LSByZWNvcmRzICU+JSBcbiAgbXV0YXRlKGNsb3NlX3dpbl9wY3QgPSBvbmVfc2NvcmVfd2lucyAvIChvbmVfc2NvcmVfd2lucyArIG9uZV9zY29yZV9sb3NzZXMpKSAlPiUgXG4gICMgbWFraW5nIHRoZSBwZXJjZW50aWxlIHNlYXNvbi1iYXNlZCwgdG8gYWNjb3VudCBmb3Igc29tZSBtb3JlIGNvbnRleHRcbiAgZ3JvdXBfYnkoc2Vhc29uKSAlPiUgXG4gIG11dGF0ZShjbG9zZV93aW5fcGVyY2VudGlsZSA9IHBlcmNlbnRfcmFuayhjbG9zZV93aW5fcGN0KSkgJT4lIFxuICBzZWxlY3Qoc2Vhc29uLCB0ZWFtLCBjb2FjaCwgb2ZmZW5zZSwgZGVmZW5zZSwgY2xvc2Vfd2luX3BjdCwgY2xvc2Vfd2luX3BlcmNlbnRpbGUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xvc2Vfc3VjY2VzcyA8LSByZWNvcmRzICU+JSBcbiAgbXV0YXRlKGNsb3NlX3dpbl9wY3QgPSBvbmVfc2NvcmVfd2lucyAvIChvbmVfc2NvcmVfd2lucyArIG9uZV9zY29yZV9sb3NzZXMpKSAlPiUgXG4gICMgbWFraW5nIHRoZSBwZXJjZW50aWxlIHNlYXNvbi1iYXNlZCwgdG8gYWNjb3VudCBmb3Igc29tZSBtb3JlIGNvbnRleHRcbiAgZ3JvdXBfYnkoc2Vhc29uKSAlPiUgXG4gIG11dGF0ZShjbG9zZV93aW5fcGVyY2VudGlsZSA9IHBlcmNlbnRfcmFuayhjbG9zZV93aW5fcGN0KSkgJT4lIFxuICBzZWxlY3Qoc2Vhc29uLCB0ZWFtLCBjb2FjaCwgb2ZmZW5zZSwgZGVmZW5zZSwgb25lX3Njb3JlX3dpbnMsIG9uZV9zY29yZV9sb3NzZXMsIGNsb3NlX3dpbl9wY3QsIGNsb3NlX3dpbl9wZXJjZW50aWxlKVxuYGBgIn0= -->
 <pre class="r"><code>close_success &lt;- records %&gt;% 
   mutate(close_win_pct = one_score_wins / (one_score_wins + one_score_losses)) %&gt;% 
   # making the percentile season-based, to account for some more context
   group_by(season) %&gt;% 
   mutate(close_win_percentile = percent_rank(close_win_pct)) %&gt;% 
-  select(season, team, coach, offense, defense, close_win_pct, close_win_percentile)</code></pre>
+  select(season, team, coach, offense, defense, one_score_wins, one_score_losses, close_win_pct, close_win_percentile)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KGNsb3NlX3N1Y2Nlc3MsIFwiLi4vLi4vZGF0YS9wcm9jZXNzZWQvY2xvc2VfZ2FtZV9zdWNjZXNzLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>write.csv(close_success, &quot;../../data/processed/close_game_success.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->

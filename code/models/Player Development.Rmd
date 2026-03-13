@@ -4,66 +4,142 @@ output: html_notebook
 ---
 
 ```{r}
+library(tidyverse)
 library(nflfastR)
 library(nflreadr)
 ```
 
 ```{r}
-apm23 <- read.csv("../../data/processed/player_apm2023.csv")
-apm24 <- read.csv("../../data/processed/player_apm2024.csv")
+folder <- "../../data/processed/"
+
+files <- list.files(folder, pattern = "^player_apm_.*\\.csv$", full.names = TRUE)
+
+years <- c()
+
+# loop through files and create a data frame for each one
+player_apm_all <- data.frame()
+for (file in files) {
+  df_name <- tools::file_path_sans_ext(basename(file))
+  player_apm_all <- player_apm_all %>% 
+    bind_rows(assign(df_name, read.csv(file)))
+
+  year <- as.numeric(sub("player_apm_", "", df_name))
+  years <- c(years, year)
+}
 ```
 
-```{r}
-apm23 <- apm23 %>% 
-  mutate(season = 2023)
-
-apm24 <- apm24 %>% 
-  mutate(season = 2024)
-```
-
+Getting the draft data for players as well as other relevant identifiers.
 ```{r}
 players_pfr <- load_players(file_type = getOption("nflreadr.prefer", default = "rds")) %>% 
-  select(pfr_id, nfl_id = gsis_id)
+  select(pfr_id, nfl_id = gsis_id, draft_year, draft_pick, rookie_season)
+```
 
-snaps23 <- nflreadr::load_snap_counts(2023) %>% 
+Getting snap counts for all player-seasons in our time span.
+```{r}
+snaps <- nflreadr::load_snap_counts(years) %>% 
   mutate(n_snaps = offense_snaps + defense_snaps + st_snaps) %>% 
-  group_by(pfr_player_id) %>% 
+  group_by(pfr_player_id, season) %>% 
   summarise(n_snaps = sum(n_snaps)) %>% 
   left_join(players_pfr, by = c("pfr_player_id" = "pfr_id"))
+```
 
-snaps24 <- nflreadr::load_snap_counts(2024) %>% 
-  mutate(n_snaps = offense_snaps + defense_snaps + st_snaps) %>% 
-  group_by(pfr_player_id) %>% 
-  summarise(n_snaps = sum(n_snaps)) %>% 
-  left_join(players_pfr, by = c("pfr_player_id" = "pfr_id"))
-
+Getting a dataframe with ALL players seen across all years of our data.
+```{r}
+players <- player_apm_all %>% 
+  select(nfl_id, full_name) %>% 
+  distinct() %>% 
+  arrange(full_name)
 ```
 
 ```{r}
-apm23 <- apm23 %>% 
-  left_join(snaps23 %>% select(nfl_id, n_snaps))
-
-apm24 <- apm24 %>% 
-  left_join(snaps24 %>% select(nfl_id, n_snaps))
+player_apm <- player_apm_all %>% 
+  left_join(snaps, by = c("nfl_id", "season")) %>% 
+  mutate(experience = season - rookie_season)
 ```
+
 
 ```{r}
-apm_test <- apm23 %>% 
-  left_join(apm24, by = c("nfl_id"), suffix = c("2023", "2024")) %>% 
-  mutate(apm_diff = apm2024 - apm2023)
+player_model_data <- player_apm %>%
+  arrange(nfl_id, season) %>%
+  group_by(nfl_id) %>%
+  mutate(
+    apm_lag1 = lag(apm),
+    exp_lag1 = lag(experience),
+    snaps_lag1 = lag(n_snaps)
+  ) %>%
+  ungroup() %>%
+  filter(!is.na(apm_lag1), !is.na(exp_lag1), !is.na(draft_pick))
+
+apm_model <- lm(
+  apm ~ apm_lag1 +
+        exp_lag1 +
+        I(exp_lag1^2) +
+        draft_pick +
+        log(snaps_lag1 + 1) +
+        n_snaps + 
+        experience +
+        position,
+  data = player_model_data
+)
+
+player_model_data <- player_model_data %>%
+  mutate(predicted_apm = predict(apm_model)) %>% 
+  mutate(residual_apm = apm - predicted_apm)
 ```
+
+
+
 
 ```{r}
 coaches <- read.csv("../../data/raw/coaches.csv")
 ```
 
+```{r}
+
+position_side_map <- tibble(
+  position = c("QB","RB","FB","WR","TE","OL","K","P","LS","DL","LB","DB"),
+  side     = c("Offense","Offense","Offense","Offense","Offense","Offense",
+               "Special","Special","Special","Defense","Defense","Defense")
+)
+
+apm_test <- player_model_data %>%
+  left_join(position_side_map, by = "position") %>%
+  mutate(side = ifelse(is.na(side), "Unknown", side)) %>% 
+  left_join(
+    coaches %>% select(season = Year, team, coach = Coach, Offense, Defense),
+    by = c("team", "season")
+  ) %>%
+  filter(!is.na(n_snaps), !is.na(coach)) %>%
+  # Exclude Special Teams positions
+  filter(side %in% c("Offense", "Defense")) %>%
+  group_by(coach, season, side) %>%
+  summarise(
+    team = unique(team),
+    apm_diff = weighted.mean(residual_apm, n_snaps, na.rm = TRUE),
+    n_players = n(),
+    .groups = "drop_last"
+  ) %>%
+  pivot_wider(
+    names_from = side,
+    values_from = c(apm_diff, n_players),
+    names_glue = "{side}_{.value}"
+  ) %>%
+  # total only counts Offense + Defense
+  mutate(total_apm_diff = Offense_apm_diff + Defense_apm_diff) %>%
+  arrange(desc(total_apm_diff))
+```
 
 ```{r}
-apm_test %>% 
-  mutate(team2024 = ifelse(team2024 == "WAS", "WSH", ifelse(team2024 == "LA", "LAR", team2024))) %>% 
-  group_by(team2024) %>% 
-  summarise(apm_diff = sum(apm_diff)) %>% 
-  arrange(desc(apm_diff)) %>% 
-  left_join(coaches %>% filter(Year == 2024) %>% select(Coach, Offense, Defense, team), by = c("team2024" = "team"))
+player_dev_score <- apm_test %>% 
+  group_by(season) %>% 
+  mutate(player_dev_percentile = percent_rank(total_apm_diff)) %>% 
+  mutate(offense_dev_percentile = percent_rank(Offense_apm_diff)) %>% 
+  mutate(defense_dev_percentile = percent_rank(Defense_apm_diff)) %>% 
+  select(season, team, total_apm_diff, player_dev_percentile, offense_dev_percentile, defense_dev_percentile, coach) %>% 
+  left_join(coaches %>% select(team, season = Year, offense = Offense, defense = Defense))
+```
+
+```{r}
+write.csv(player_dev_score, "../../data/processed/player_dev_score.csv")
 ```
 

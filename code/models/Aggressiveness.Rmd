@@ -48,6 +48,86 @@ aggressiveness_score <- fourth_downs %>%
 
 ```{r}
 write.csv(aggressiveness_score, "../../data/processed/aggressiveness_score.csv")
+```
 
+bootstrapping wps to predict coach's true distribution for this metric
+```{r}
+set.seed(8)
+bs <- 1e4
+
+coaches_bs <- coaches %>% 
+  rename(season = Year) %>% 
+  filter(season > 2015) %>% 
+  select(Coach) %>% 
+  distinct() %>% 
+  pull()
+
+fourthdown_bs <- fourth_downs %>% 
+  select(wp_change, team = posteam, season) %>% 
+  mutate(team = case_when(
+    team == "OAK" ~ "LV",
+    team == "SD" ~ "LAC", 
+    team == "STL" ~ "LA",
+    team == "WAS" ~ "WSH",
+    .default = team
+  )) %>% 
+  mutate(team = ifelse(team == "LA", "LAR", team)) %>% 
+  left_join(coaches %>% select(season = Year, team, coach = Coach, offense = Offense, defense = Defense))
+
+coaches_bs_results <- data.frame(
+  coach = character(length(coaches_bs)),
+  lower = numeric(length(coaches_bs)),
+  upper = numeric(length(coaches_bs)),
+  mean_bs = numeric(length(coaches_bs)),
+  stringsAsFactors = FALSE
+)
+
+for (i in seq_along(coaches_bs)) {
+  coach1 <- coaches_bs[i]
+  
+  # get the wp_change values for this coach
+  coach_data <- fourthdown_bs %>% 
+    filter(coach == coach1) %>% 
+    pull(wp_change)
+  
+  # bootstrap mean sampling
+  bs_coach <- replicate(bs, mean(sample(coach_data, length(coach_data), replace = TRUE)))
+  
+  # 95% CI
+  ci_bs <- quantile(bs_coach, probs = c(0.025, 0.975))
+  
+  # store results
+  coaches_bs_results$coach[i] <- coach1
+  coaches_bs_results$lower[i] <- ci_bs[1]
+  coaches_bs_results$upper[i] <- ci_bs[2]
+  coaches_bs_results$mean_bs[i] <- mean(bs_coach)
+}
+```
+
+plotting the coaches from this season as a sanity check
+```{r}
+coaches_2025 <- coaches %>% 
+  filter(Year == 2025) %>% select(Coach) %>% pull()
+
+coaches_bs_results <- coaches_bs_results %>%
+  filter(coach %in% coaches_2025) %>% 
+  arrange(lower) %>%
+  mutate(coach = factor(coach, levels = coach))
+
+ggplot(coaches_bs_results, aes(y = coach)) +
+  geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.4, color = "steelblue") +
+  geom_point(aes(x = mean_bs), color = "darkred") +
+  theme_minimal() +
+  labs(
+    x = "Bootstrap 95% CI of WP Change on 4th Downs",
+    y = "Coach",
+    title = "Bootstrap Confidence Intervals by Coach - WP Added on 4th Downs",
+    subtitle = "All HC During 2025 Season"
+  ) +
+  theme(axis.text.y = element_text(size = 8))
+```
+
+```{r}
+write.csv(coaches_bs_results, "../../data/processed/aggressiveness_bs.csv")
 ```
 
