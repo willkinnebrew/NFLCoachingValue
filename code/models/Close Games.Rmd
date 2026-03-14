@@ -26,3 +26,47 @@ close_success <- records %>%
 write.csv(close_success, "../../data/processed/close_game_success.csv")
 ```
 
+```{r}
+fired <- c("TEN", "NYG", "ATL", "CLE", "LV", "BUF", "ARI", "BAL", "MIA")
+
+close_success %>% 
+  filter(season == 2025, team %in% fired) %>% 
+  select(season, team, one_score_wins, one_score_losses) %>% 
+  summarise(wins = sum(one_score_wins), losses = sum(one_score_losses), pct = wins/(wins+losses))
+```
+```{r}
+superbowl_teams <- records %>% 
+  filter(round_reached == "SB") %>% 
+  mutate(close_win_pct = one_score_wins / (one_score_wins + one_score_losses)) %>% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %>% 
+  mutate(close_win_percentile = percent_rank(close_win_pct)) %>% 
+  select(season, team, coach, offense, defense, one_score_wins, one_score_losses, close_win_pct, close_win_percentile)
+
+superbowl_teams %>% 
+  ungroup() %>% 
+  summarise(wins = sum(one_score_wins), losses = sum(one_score_losses), pct = wins/(wins+losses), teamsY = sum(close_win_pct >= .5), teamsN = sum(close_win_pct < .5))
+```
+
+```{r}
+playoff_teams <- records %>% 
+  filter(made_playoffs) %>% 
+  mutate(close_win_pct = one_score_wins / (one_score_wins + one_score_losses)) %>% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %>% 
+  mutate(close_win_percentile = percent_rank(close_win_pct)) %>% 
+  select(season, team, coach, offense, defense, one_score_wins, one_score_losses, close_win_pct, close_win_percentile)
+
+playoff_teams %>% 
+  ungroup() %>% 
+  summarise(wins = sum(one_score_wins), losses = sum(one_score_losses), pct = wins/(wins+losses), teamsY = sum(close_win_pct >= .5), teamsN = sum(close_win_pct < .5))
+```
+
+```{r}
+close_success %>% 
+  group_by(coach) %>% 
+  summarise(avg_score = sum(close_win_percentile) / n(), n = n()) %>% 
+  arrange(desc(avg_score)) %>% 
+  filter(n > 2)
+```
+

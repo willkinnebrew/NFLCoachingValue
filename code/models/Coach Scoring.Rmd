@@ -45,7 +45,7 @@ scores <- team_seasons %>%
 ```{r}
 # best coaches since x year
 best_coaches <- scores %>% 
-  filter(season > 2015) %>% 
+  filter(season > 2015, season < 2022) %>% 
   pivot_longer(
     cols = c(coach, offense, defense),
     names_to = "role",
@@ -64,9 +64,10 @@ best_coaches <- scores %>%
   summarise(
     seasons = n(),
     total_score = sum(score_weighted, na.rm = TRUE),
+    avg_score = total_score / seasons,
     .groups = "drop"
   ) %>% 
-  arrange(desc(total_score)) %>% 
+  arrange(desc(avg_score)) %>% 
   mutate(rank = row_number()) %>% 
   select(rank, coach_name, seasons, total_score)
 
