@@ -58,11 +58,13 @@ bs <- 1e4
 coaches_bs <- coaches %>% 
   rename(season = Year) %>% 
   filter(season > 2015) %>% 
+  filter(season == 2025) %>% 
   select(Coach) %>% 
   distinct() %>% 
   pull()
 
 fourthdown_bs <- fourth_downs %>% 
+  filter(season == 2025) %>% 
   select(wp_change, team = posteam, season) %>% 
   mutate(team = case_when(
     team == "OAK" ~ "LV",

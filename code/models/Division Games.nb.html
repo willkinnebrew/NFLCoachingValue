@@ -1770,12 +1770,13 @@ library(nflreadr)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGl2aXNpb25fc3VjY2VzcyA8LSByZWNvcmRzICU+JSBcbiAgbXV0YXRlKGRpdmlzaW9uX3dpbl9wY3QgPSBkaXZfd2lucyAvIChkaXZfd2lucyArIGRpdl9sb3NzZXMgKyBkaXZfdGllcykpICU+JSBcbiAgbXV0YXRlKGRpdmlzaW9uX3dpbl9wZXJjZW50aWxlID0gcGVyY2VudF9yYW5rKGRpdmlzaW9uX3dpbl9wY3QpLFxuICAgICAgICAgZGl2aXNpb25fd2luX3BlcmNlbnRpbGUgPSBkaXZpc2lvbl93aW5fcGVyY2VudGlsZS9tYXgoZGl2aXNpb25fd2luX3BlcmNlbnRpbGUpKSAlPiUgXG4gIHNlbGVjdChzZWFzb24sIHRlYW0sIGNvYWNoLCBvZmZlbnNlLCBkZWZlbnNlLCBkaXZfd2lucywgZGl2aXNpb25fd2luX3BjdCwgZGl2aXNpb25fd2luX3BlcmNlbnRpbGUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGl2aXNpb25fc3VjY2VzcyA8LSByZWNvcmRzICU+JSBcbiAgbXV0YXRlKGRpdmlzaW9uX3dpbl9wY3QgPSBkaXZfd2lucyAvIChkaXZfd2lucyArIGRpdl9sb3NzZXMgKyBkaXZfdGllcykpICU+JSBcbiAgIyBjb3JyZWN0aW5nIGl0IHRvIGEgMC0xIHNjYWxlXG4gIG11dGF0ZShkaXZpc2lvbl93aW5fcGVyY2VudGlsZSA9IHBlcmNlbnRfcmFuayhkaXZpc2lvbl93aW5fcGN0KSxcbiAgICAgICAgIGRpdmlzaW9uX3dpbl9wZXJjZW50aWxlID0gZGl2aXNpb25fd2luX3BlcmNlbnRpbGUvbWF4KGRpdmlzaW9uX3dpbl9wZXJjZW50aWxlKSkgJT4lIFxuICBzZWxlY3Qoc2Vhc29uLCB0ZWFtLCBjb2FjaCwgb2ZmZW5zZSwgZGVmZW5zZSwgZGl2X3dpbnMsIGRpdl9sb3NzZXMsIGRpdmlzaW9uX3dpbl9wY3QsIGRpdmlzaW9uX3dpbl9wZXJjZW50aWxlKVxuYGBgIn0= -->
 <pre class="r"><code>division_success &lt;- records %&gt;% 
   mutate(division_win_pct = div_wins / (div_wins + div_losses + div_ties)) %&gt;% 
+  # correcting it to a 0-1 scale
   mutate(division_win_percentile = percent_rank(division_win_pct),
          division_win_percentile = division_win_percentile/max(division_win_percentile)) %&gt;% 
-  select(season, team, coach, offense, defense, div_wins, division_win_pct, division_win_percentile)</code></pre>
+  select(season, team, coach, offense, defense, div_wins, div_losses, division_win_pct, division_win_percentile)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1787,8 +1788,85 @@ library(nflreadr)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MTEsIm5jb2wiOjQsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiMTEgw5cgNCJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJsMVNTMDdETUJCMUU3ZW80Vk1rTHBBTHRCczI3Q3BCQlFoVUNmR1J1cDJtYm1NMUhWZU95MmZINVRnQ2V6WWNnUzNGU1dkS0drdkpqSi9uZVdiZStINHdPbzFHa1JBaUZGSTJSTmowcm1nK1BWNTJ6NFNRZ2Q4MGhCVHR3cjc2b0JQdlNQOGQrMitmRG83T3JRYU1MeURMSUFVazlHQ0REbUJzc295d3d4dVRZbndOZGd5cldVcGc1OFlnT0UrTXJ3RFJNTDl6cTU0MXhnOU9UUUh6dVNZNEd1cTVpbTloT29jZFpKaGNtRGRPUThnQVVDdk9mWENublBKRldsdXA1eDVTcFJieDBGaXJjMjduUWZsYVBGdlpoWEd1Q0N1YjNheWdsT3JmRDhnUFM2VTJWbFk0TGRxSEZWK1NYMkJOc3NVOVI1VThvdi81Vks3K2w5aFpXNXpzRnFlNC9zY3VyLy9OY1R2VGJDSXNWRTZUbEF3bUJoS2VpM3pSeUpxME1wUG5pbmZoTW5HMTY5cld2UFQ0eXFMMzROMy8xdXYxVHoxdmtrSE9lUm1NSnVDZ043V2U3M2UvTmNxZVdUcHRmQzBpT0NIbHF1U0dyUUdkRlJhVlRMcEp1c0o1OTdSMkhDNXhWdVNrZ1FrcXVFSGlzeTgzVlFScm9yZFlDb1V6allyYnlXQzhmV0xoUkQzekkvSjZsSEwwbGxhajR6NDltdmVjY2NDVUtERVpJMlhuNHZjUEsrdnp4NU1EQUFBPSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["coach"],"name":[1],"type":["chr"],"align":["left"]},{"label":["wins"],"name":[2],"type":["int"],"align":["right"]},{"label":["losses"],"name":[3],"type":["int"],"align":["right"]},{"label":["pct"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Brian Callahan","2":"0","3":"6","4":"0.0000000"},{"1":"Brian Daboll","2":"2","3":"4","4":"0.3333333"},{"1":"John Harbaugh","2":"3","3":"3","4":"0.5000000"},{"1":"Jonathan Gannon","2":"0","3":"6","4":"0.0000000"},{"1":"Kevin Stefanski","2":"2","3":"4","4":"0.3333333"},{"1":"Mike Kafka","2":"2","3":"4","4":"0.3333333"},{"1":"Mike McCoy","2":"0","3":"6","4":"0.0000000"},{"1":"Mike McDaniel","2":"3","3":"3","4":"0.5000000"},{"1":"Pete Carroll","2":"1","3":"5","4":"0.1666667"},{"1":"Raheem Morris","2":"3","3":"3","4":"0.5000000"},{"1":"Sean McDermott","2":"4","3":"2","4":"0.6666667"}],"options":{"columns":{"min":{},"max":[10],"total":[4]},"rows":{"min":[10],"max":[10],"total":[11]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VwZXJib3dsX3RlYW1zIDwtIHJlY29yZHMgJT4lIFxuICBmaWx0ZXIocm91bmRfcmVhY2hlZCA9PSBcIlNCXCIpICU+JSBcbiAgbXV0YXRlKGRpdl93aW5fcGN0ID0gZGl2X3dpbnMgLyAoZGl2X3dpbnMgKyBkaXZfbG9zc2VzKSkgJT4lIFxuICAjIG1ha2luZyB0aGUgcGVyY2VudGlsZSBzZWFzb24tYmFzZWQsIHRvIGFjY291bnQgZm9yIHNvbWUgbW9yZSBjb250ZXh0XG4gIGdyb3VwX2J5KHNlYXNvbikgJT4lIFxuICBtdXRhdGUoZGl2X3dpbl9wZXJjZW50aWxlID0gcGVyY2VudF9yYW5rKGRpdl93aW5fcGN0KSkgJT4lIFxuICBzZWxlY3Qoc2Vhc29uLCB0ZWFtLCBjb2FjaCwgb2ZmZW5zZSwgZGVmZW5zZSwgZGl2X3dpbnMsIGRpdl9sb3NzZXMsIGRpdl93aW5fcGN0LCBkaXZfd2luX3BlcmNlbnRpbGUpXG5cbnN1cGVyYm93bF90ZWFtcyAlPiUgXG4gIHVuZ3JvdXAoKSAlPiUgXG4gIHN1bW1hcmlzZSh3aW5zID0gc3VtKGRpdl93aW5zKSwgbG9zc2VzID0gc3VtKGRpdl9sb3NzZXMpLCBwY3QgPSB3aW5zLyh3aW5zK2xvc3NlcyksIHRlYW1zWSA9IHN1bShkaXZfd2luX3BjdCA+PSAuNSksIHRlYW1zTiA9IHN1bShkaXZfd2luX3BjdCA8IC41KSlcbmBgYCJ9 -->
+<pre class="r"><code>superbowl_teams &lt;- records %&gt;% 
+  filter(round_reached == &quot;SB&quot;) %&gt;% 
+  mutate(div_win_pct = div_wins / (div_wins + div_losses)) %&gt;% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %&gt;% 
+  mutate(div_win_percentile = percent_rank(div_win_pct)) %&gt;% 
+  select(season, team, coach, offense, defense, div_wins, div_losses, div_win_pct, div_win_percentile)
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShuZmxmYXN0UikNCmxpYnJhcnkobmZscmVhZHIpDQpgYGANCg0KYGBge3J9DQpyZWNvcmRzIDwtIHJlYWQuY3N2KCIuLi8uLi9kYXRhL3Byb2Nlc3NlZC90ZWFtX3JlY29yZHMuY3N2IikNCmBgYA0KDQpgYGB7cn0NCmRpdmlzaW9uX3N1Y2Nlc3MgPC0gcmVjb3JkcyAlPiUgDQogIG11dGF0ZShkaXZpc2lvbl93aW5fcGN0ID0gZGl2X3dpbnMgLyAoZGl2X3dpbnMgKyBkaXZfbG9zc2VzICsgZGl2X3RpZXMpKSAlPiUgDQogICMgY29ycmVjdGluZyBpdCB0byBhIDAtMSBzY2FsZQ0KICBtdXRhdGUoZGl2aXNpb25fd2luX3BlcmNlbnRpbGUgPSBwZXJjZW50X3JhbmsoZGl2aXNpb25fd2luX3BjdCksDQogICAgICAgICBkaXZpc2lvbl93aW5fcGVyY2VudGlsZSA9IGRpdmlzaW9uX3dpbl9wZXJjZW50aWxlL21heChkaXZpc2lvbl93aW5fcGVyY2VudGlsZSkpICU+JSANCiAgc2VsZWN0KHNlYXNvbiwgdGVhbSwgY29hY2gsIG9mZmVuc2UsIGRlZmVuc2UsIGRpdl93aW5zLCBkaXZpc2lvbl93aW5fcGN0LCBkaXZpc2lvbl93aW5fcGVyY2VudGlsZSkNCmBgYA0KDQpgYGB7cn0NCndyaXRlLmNzdihkaXZpc2lvbl9zdWNjZXNzLCAiLi4vLi4vZGF0YS9wcm9jZXNzZWQvZGl2aXNpb25fZ2FtZV9zdWNjZXNzLmNzdiIpDQpgYGANCg0KDQo=</div>
+superbowl_teams %&gt;% 
+  ungroup() %&gt;% 
+  summarise(wins = sum(div_wins), losses = sum(div_losses), pct = wins/(wins+losses), teamsY = sum(div_win_pct &gt;= .5), teamsN = sum(div_win_pct &lt; .5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NSwic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyIxIMOXIDUiXX19LCJyZGYiOiJINHNJQUFBQUFBQUFCbDFRUVU3RE1CRGNKRTVRTGJVZ0lYSGlDOGtGdGVxdEY4UU5EZ2lrY2pTSmFTTmNPNHBkeXBFLzhEcWV3Q2RhMW1rV2dpTTVtWjNKcm1mbi9ucDV4WmNjQUJKZ0xJSWtSUWpwNDhOTlBnZGdNUllSTUJqNTd6ditkTzVWUE9OT0FGZ1A4Q1dlaWNlTDc5bnRaL1UxRzJnWEF3ekI0RlNMamJRSXpycmhSNUx0YW0xN25DbGpyYVFxYVVwSGdwTmlZNS8rVlhmQjlGRnJkZ1hkNEMzRUgvZzY0QlBhS0pXd1pJTklYZ2tuaXBjVys3SGFCeTBucG5HMVFaOFErMkN5b0RscUErSjBxNzJUS2kvWFcvMmFUd001YWZUSzMvbVgwMjltMFFDblJ4ZnhvVy9QYUgrcFY3V1d0STRTejFMUjVFcSs5WENDZVhSeEZFMWJhMHFTSTJzTFo1eWdGbDRhUlV5M09leC9BQjJWc1hBdEFnQUEifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["wins"],"name":[1],"type":["int"],"align":["right"]},{"label":["losses"],"name":[2],"type":["int"],"align":["right"]},{"label":["pct"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["teamsY"],"name":[4],"type":["int"],"align":["right"]},{"label":["teamsN"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"104","2":"28","3":"0.7878788","4":"22","5":"0"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheW9mZl90ZWFtcyA8LSByZWNvcmRzICU+JSBcbiAgZmlsdGVyKG1hZGVfcGxheW9mZnMpICU+JSBcbiAgbXV0YXRlKGRpdl93aW5fcGN0ID0gZGl2X3dpbnMgLyAoZGl2X3dpbnMgKyBkaXZfbG9zc2VzKSkgJT4lIFxuICAjIG1ha2luZyB0aGUgcGVyY2VudGlsZSBzZWFzb24tYmFzZWQsIHRvIGFjY291bnQgZm9yIHNvbWUgbW9yZSBjb250ZXh0XG4gIGdyb3VwX2J5KHNlYXNvbikgJT4lIFxuICBtdXRhdGUoZGl2X3dpbl9wZXJjZW50aWxlID0gcGVyY2VudF9yYW5rKGRpdl93aW5fcGN0KSkgJT4lIFxuICBzZWxlY3Qoc2Vhc29uLCB0ZWFtLCBjb2FjaCwgb2ZmZW5zZSwgZGVmZW5zZSwgZGl2X3dpbnMsIGRpdl9sb3NzZXMsIGRpdl93aW5fcGN0LCBkaXZfd2luX3BlcmNlbnRpbGUpXG5cbnBsYXlvZmZfdGVhbXMgJT4lIFxuICB1bmdyb3VwKCkgJT4lIFxuICBzdW1tYXJpc2Uod2lucyA9IHN1bShkaXZfd2lucyksIGxvc3NlcyA9IHN1bShkaXZfbG9zc2VzKSwgcGN0ID0gd2lucy8od2lucytsb3NzZXMpLCB0ZWFtc1kgPSBzdW0oZGl2X3dpbl9wY3QgPj0gLjUpLCB0ZWFtc04gPSBzdW0oZGl2X3dpbl9wY3QgPCAuNSkpXG5gYGAifQ== -->
+<pre class="r"><code>playoff_teams &lt;- records %&gt;% 
+  filter(made_playoffs) %&gt;% 
+  mutate(div_win_pct = div_wins / (div_wins + div_losses)) %&gt;% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %&gt;% 
+  mutate(div_win_percentile = percent_rank(div_win_pct)) %&gt;% 
+  select(season, team, coach, offense, defense, div_wins, div_losses, div_win_pct, div_win_percentile)
+
+playoff_teams %&gt;% 
+  ungroup() %&gt;% 
+  summarise(wins = sum(div_wins), losses = sum(div_losses), pct = wins/(wins+losses), teamsY = sum(div_win_pct &gt;= .5), teamsN = sum(div_win_pct &lt; .5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MSwibmNvbCI6NSwic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyIxIMOXIDUiXX19LCJyZGYiOiJINHNJQUFBQUFBQUFCbDFRUVU3RE1CQmNPMDZxQmxHUU9QQ0tCQkFYYmx3UVJ3NElxbkowRTdkRXBIWVV1NVFqWjE3QW8zZ0h6MmhacDFrMTJKTHQyUjN2ZW5ZZTcyYlg2U3dGZ0FpRVlCREZDQ0YrZnJyUGJnQUV4NENCZ0xHL1AvRFJtV2R4SDNjRThPa0Jzd25lZnJQYjM2T2Y4KytMeXdNSFh3TThDaHJIV3E2VVJYRGFOZDhueGFiU3RzZEpiYXhWRkVWTjRZaHdTcTdzeTcvb0llZyticzBtcHgrOEJQNkp4dzVYS0tPb3BTVVpsRXhMNldTK2FMRWVvMjFRTWpLTnF3enFCTzZOU1lKaTFnYUprN1gyU3Nxc2VGM3J0K3dxb0tOR0wvMmZ2VTh3OEl3TmNMeFh3WGQ5ZVVMeks3MnN0S0p4YWpsWE5YVXUxWHNQSitoSFowZmV0SlVtSjFQTTJ0d1pKNmtrTFV4Tm1XNXkyUDRCK1Q4ZldDMENBQUE9In0= -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["wins"],"name":[1],"type":["int"],"align":["right"]},{"label":["losses"],"name":[2],"type":["int"],"align":["right"]},{"label":["pct"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["teamsY"],"name":[4],"type":["int"],"align":["right"]},{"label":["teamsN"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"598","2":"270","3":"0.6889401","4":"138","5":"7"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29hY2hlc18yMDI1IDwtIGNvYWNoZXMgJT4lIFxuICBmaWx0ZXIoWWVhciA9PSAyMDI1KSAlPiUgc2VsZWN0KENvYWNoKSAlPiUgcHVsbCgpXG5cbmRpdmlzaW9uX3N1Y2Nlc3MgJT4lIFxuICBncm91cF9ieShjb2FjaCkgJT4lIFxuICBmaWx0ZXIoY29hY2ggJWluJSBjb2FjaGVzXzIwMjUpICU+JSBcbiAgc3VtbWFyaXNlKGF2Z19zY29yZSA9IHN1bShkaXZpc2lvbl93aW5fcGVyY2VudGlsZSkgLyBuKCksIG4gPSBuKCkpICU+JSBcbiAgYXJyYW5nZShkZXNjKGF2Z19zY29yZSkpICU+JSBcbiAgZmlsdGVyKG4gPiAyKVxuYGBgIn0= -->
+<pre class="r"><code>coaches_2025 &lt;- coaches %&gt;% 
+  filter(Year == 2025) %&gt;% select(Coach) %&gt;% pull()
+
+division_success %&gt;% 
+  group_by(coach) %&gt;% 
+  filter(coach %in% coaches_2025) %&gt;% 
+  summarise(avg_score = sum(division_win_percentile) / n(), n = n()) %&gt;% 
+  arrange(desc(avg_score)) %&gt;% 
+  filter(n &gt; 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MjQsIm5jb2wiOjMsInN1bW1hcnkiOnsiQSB0aWJibGUiOlsiMjQgw5cgMyJdfX0sInJkZiI6Ikg0c0lBQUFBQUFBQUJsMVVRV2dUUVJUZFpKUFdiSkpXS0pRcUtxdFFDOXJtVUM5NkdteGpMVzNUMWlTV1d0QTYyVXlUSVp1WnVObWtSa0ZFa09wTnFRZkJnemZCaXdleEJ4RXJDb0lpZUtpb29MUzJwb2oxNUVGUUR6Yk9iR2ZTTklISi9IbnovN3o1Yi83ZmFIajhrRGF1S1lxaUtoNlBTMUc5ekZTOEorTjlYWWNWeGVObUM1ZmlVWHg4UHMrY1doeFBSZG5PUnB2WUNJUlJCQmxVajVZZ3lRdk1kNVFrUzNvVTRhUUFtbUlJRWoxaWhKR1ZwYll0VUg4RVo1QWVwMWtURXdrNWpxT3daRk1KQlNMUXR2VWgyR2VpZ2lXdzREQTJNbm9NV3hnU2dnV29DWkl4V05wQ01HYkJCRElGMUR5SWlwam9JeDI5bEJCa210VXNXR2d2ek9ZU201aVBZeWNLbU1pYkJBZG9tdWo5MEVyQVFpb3RRWWVEcFFZSnJySUVCMHNtMG1OcFNDQWJrbU1VMllpUldCYXRjdmpqTkpuVWUraTBpYVI0d1NoTUk1VFZJOVN5Y0g3cnRXTTJtbUl5WjNCVlYzWTg0akEyMGtnU2FSUFEwT093WkZLcFY2Q0hLNldIWVdLVHVubUFFbWl6ZVAwNEU3RXF0eWJ5NmFVbFRzQmZHcXpkM3YzZ2JQRUpXRXZzejA4MGRZSlZoUGY4K0xzQVZvZStQZG9WcjREeS9kQ3pjek52UUhsMnVYdmw5VTlRM3B2c3ZIcmpJZmlxZDh3ZTdQOE5WdDVkb0pHMWViQnk1ZzZ6aHNFeVArN3hGZkJsaWE5SHdOSXZidVRBb2pOVHNQamlRT0Qwdnhudytaajd5UEw3T2ZDcHRlZlZLZjgrOFBFZWQ3Z0lQclR2K0hNclZhN09DOWZtMzg2Rko4RkxoK2NwZU83UXQ0S2JkNi8zWFdyZnlVVjFLbmFqZXYzOGJjWE1hNytSMTd6QXVPMWhvNEdOYmNMSEkvWTBnYWxpWDYzeFZ6ZkdscGJ4RXBobHI3clJMcW9FRFFvTldUcytXRXhONWcxcUlkbGxwTzRNbjBXblEvSWNub1Q3TXZ1clZDcmY2OGtNRStZbG1RUzFKTFJoYU1waThXeTFYaGZTU0hNMnBxeHBGWGVMU0trMjJHWFZBYzBGd20rUzdETFNCWkxwNnE3YlZuTWtKVlJ5S1J1L29MRGJhbXloa3JzaXdodEVlQU1pS1V5a0VGNnpwbWZWSkNyS2dtZDZPSEtFY2hZbThrT2lNVFFmc3FrTlpZaG1VRk1pVHViSytuOStkYzJRN1FRQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["coach"],"name":[1],"type":["chr"],"align":["left"]},{"label":["avg_score"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"DeMeco Ryans","2":"0.79981884","3":"3"},{"1":"Andy Reid","2":"0.79323123","3":"11"},{"1":"Sean McDermott","2":"0.63737923","3":"9"},{"1":"Mike Tomlin","2":"0.63438735","3":"11"},{"1":"Sean Payton","2":"0.61440217","3":"10"},{"1":"Matt LaFleur","2":"0.61180124","3":"7"},{"1":"Nick Sirianni","2":"0.59782609","3":"5"},{"1":"Sean McVay","2":"0.56642512","3":"9"},{"1":"Mike Vrabel","2":"0.55706522","3":"7"},{"1":"Kevin O'Connell","2":"0.54279891","3":"4"},{"1":"Dan Campbell","2":"0.50362319","3":"6"},{"1":"Dan Quinn","2":"0.49796196","3":"8"},{"1":"John Harbaugh","2":"0.48369565","3":"11"},{"1":"Mike McDaniel","2":"0.46807065","3":"4"},{"1":"Kyle Shanahan","2":"0.46497585","3":"9"},{"1":"Pete Carroll","2":"0.42608696","3":"10"},{"1":"Todd Bowles","2":"0.40760870","3":"8"},{"1":"Raheem Morris","2":"0.36956522","3":"3"},{"1":"Kevin Stefanski","2":"0.34601449","3":"6"},{"1":"Shane Steichen","2":"0.34601449","3":"3"},{"1":"Zac Taylor","2":"0.28959627","3":"7"},{"1":"Brian Daboll","2":"0.17051630","3":"4"},{"1":"Jonathan Gannon","2":"0.13586957","3":"3"},{"1":"Mike McCoy","2":"0.01721014","3":"3"}],"options":{"columns":{"min":{},"max":[10],"total":[3]},"rows":{"min":[10],"max":[10],"total":[24]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShuZmxmYXN0UikNCmxpYnJhcnkobmZscmVhZHIpDQpgYGANCg0KYGBge3J9DQpyZWNvcmRzIDwtIHJlYWQuY3N2KCIuLi8uLi9kYXRhL3Byb2Nlc3NlZC90ZWFtX3JlY29yZHMuY3N2IikNCmBgYA0KDQpgYGB7cn0NCmRpdmlzaW9uX3N1Y2Nlc3MgPC0gcmVjb3JkcyAlPiUgDQogIG11dGF0ZShkaXZpc2lvbl93aW5fcGN0ID0gZGl2X3dpbnMgLyAoZGl2X3dpbnMgKyBkaXZfbG9zc2VzICsgZGl2X3RpZXMpKSAlPiUgDQogICMgY29ycmVjdGluZyBpdCB0byBhIDAtMSBzY2FsZQ0KICBtdXRhdGUoZGl2aXNpb25fd2luX3BlcmNlbnRpbGUgPSBwZXJjZW50X3JhbmsoZGl2aXNpb25fd2luX3BjdCksDQogICAgICAgICBkaXZpc2lvbl93aW5fcGVyY2VudGlsZSA9IGRpdmlzaW9uX3dpbl9wZXJjZW50aWxlL21heChkaXZpc2lvbl93aW5fcGVyY2VudGlsZSkpICU+JSANCiAgc2VsZWN0KHNlYXNvbiwgdGVhbSwgY29hY2gsIG9mZmVuc2UsIGRlZmVuc2UsIGRpdl93aW5zLCBkaXZfbG9zc2VzLCBkaXZpc2lvbl93aW5fcGN0LCBkaXZpc2lvbl93aW5fcGVyY2VudGlsZSkNCmBgYA0KDQpgYGB7cn0NCndyaXRlLmNzdihkaXZpc2lvbl9zdWNjZXNzLCAiLi4vLi4vZGF0YS9wcm9jZXNzZWQvZGl2aXNpb25fZ2FtZV9zdWNjZXNzLmNzdiIpDQpgYGANCg0KYGBge3J9DQpmaXJlZCA8LSBjKCJURU4iLCAiTllHIiwgIkFUTCIsICJDTEUiLCAiTFYiLCAiQlVGIiwgIkFSSSIsICJCQUwiLCAiTUlBIikNCg0KZGl2aXNpb25fc3VjY2VzcyAlPiUgDQogIGZpbHRlcihzZWFzb24gPT0gMjAyNSwgdGVhbSAlaW4lIGZpcmVkKSAlPiUgDQogIHNlbGVjdChzZWFzb24sIGNvYWNoLCB0ZWFtLCBkaXZfd2lucywgZGl2X2xvc3NlcykgJT4lIA0KICBncm91cF9ieShjb2FjaCkgJT4lIA0KICBzdW1tYXJpc2Uod2lucyA9IHN1bShkaXZfd2lucyksIGxvc3NlcyA9IHN1bShkaXZfbG9zc2VzKSwgcGN0ID0gd2lucy8od2lucytsb3NzZXMpKQ0KYGBgDQpgYGB7cn0NCnN1cGVyYm93bF90ZWFtcyA8LSByZWNvcmRzICU+JSANCiAgZmlsdGVyKHJvdW5kX3JlYWNoZWQgPT0gIlNCIikgJT4lIA0KICBtdXRhdGUoZGl2X3dpbl9wY3QgPSBkaXZfd2lucyAvIChkaXZfd2lucyArIGRpdl9sb3NzZXMpKSAlPiUgDQogICMgbWFraW5nIHRoZSBwZXJjZW50aWxlIHNlYXNvbi1iYXNlZCwgdG8gYWNjb3VudCBmb3Igc29tZSBtb3JlIGNvbnRleHQNCiAgZ3JvdXBfYnkoc2Vhc29uKSAlPiUgDQogIG11dGF0ZShkaXZfd2luX3BlcmNlbnRpbGUgPSBwZXJjZW50X3JhbmsoZGl2X3dpbl9wY3QpKSAlPiUgDQogIHNlbGVjdChzZWFzb24sIHRlYW0sIGNvYWNoLCBvZmZlbnNlLCBkZWZlbnNlLCBkaXZfd2lucywgZGl2X2xvc3NlcywgZGl2X3dpbl9wY3QsIGRpdl93aW5fcGVyY2VudGlsZSkNCg0Kc3VwZXJib3dsX3RlYW1zICU+JSANCiAgdW5ncm91cCgpICU+JSANCiAgc3VtbWFyaXNlKHdpbnMgPSBzdW0oZGl2X3dpbnMpLCBsb3NzZXMgPSBzdW0oZGl2X2xvc3NlcyksIHBjdCA9IHdpbnMvKHdpbnMrbG9zc2VzKSwgdGVhbXNZID0gc3VtKGRpdl93aW5fcGN0ID49IC41KSwgdGVhbXNOID0gc3VtKGRpdl93aW5fcGN0IDwgLjUpKQ0KYGBgDQoNCmBgYHtyfQ0KcGxheW9mZl90ZWFtcyA8LSByZWNvcmRzICU+JSANCiAgZmlsdGVyKG1hZGVfcGxheW9mZnMpICU+JSANCiAgbXV0YXRlKGRpdl93aW5fcGN0ID0gZGl2X3dpbnMgLyAoZGl2X3dpbnMgKyBkaXZfbG9zc2VzKSkgJT4lIA0KICAjIG1ha2luZyB0aGUgcGVyY2VudGlsZSBzZWFzb24tYmFzZWQsIHRvIGFjY291bnQgZm9yIHNvbWUgbW9yZSBjb250ZXh0DQogIGdyb3VwX2J5KHNlYXNvbikgJT4lIA0KICBtdXRhdGUoZGl2X3dpbl9wZXJjZW50aWxlID0gcGVyY2VudF9yYW5rKGRpdl93aW5fcGN0KSkgJT4lIA0KICBzZWxlY3Qoc2Vhc29uLCB0ZWFtLCBjb2FjaCwgb2ZmZW5zZSwgZGVmZW5zZSwgZGl2X3dpbnMsIGRpdl9sb3NzZXMsIGRpdl93aW5fcGN0LCBkaXZfd2luX3BlcmNlbnRpbGUpDQoNCnBsYXlvZmZfdGVhbXMgJT4lIA0KICB1bmdyb3VwKCkgJT4lIA0KICBzdW1tYXJpc2Uod2lucyA9IHN1bShkaXZfd2lucyksIGxvc3NlcyA9IHN1bShkaXZfbG9zc2VzKSwgcGN0ID0gd2lucy8od2lucytsb3NzZXMpLCB0ZWFtc1kgPSBzdW0oZGl2X3dpbl9wY3QgPj0gLjUpLCB0ZWFtc04gPSBzdW0oZGl2X3dpbl9wY3QgPCAuNSkpDQpgYGANCg0KYGBge3J9DQpjb2FjaGVzXzIwMjUgPC0gY29hY2hlcyAlPiUgDQogIGZpbHRlcihZZWFyID09IDIwMjUpICU+JSBzZWxlY3QoQ29hY2gpICU+JSBwdWxsKCkNCg0KZGl2aXNpb25fc3VjY2VzcyAlPiUgDQogIGdyb3VwX2J5KGNvYWNoKSAlPiUgDQogIGZpbHRlcihjb2FjaCAlaW4lIGNvYWNoZXNfMjAyNSkgJT4lIA0KICBzdW1tYXJpc2UoYXZnX3Njb3JlID0gc3VtKGRpdmlzaW9uX3dpbl9wZXJjZW50aWxlKSAvIG4oKSwgbiA9IG4oKSkgJT4lIA0KICBhcnJhbmdlKGRlc2MoYXZnX3Njb3JlKSkgJT4lIA0KICBmaWx0ZXIobiA+IDIpDQpgYGANCg==</div>
 
 
 

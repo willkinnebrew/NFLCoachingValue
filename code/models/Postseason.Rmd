@@ -25,10 +25,57 @@ post_success <- records %>%
   )) %>% 
   group_by(season) %>% 
   mutate(playoff_percentile = percent_rank(playoff_success)) %>% 
-  select(season, team, coach, offense, defense, playoff_wins, playoff_success, playoff_percentile)
+  select(season, team, coach, offense, defense, playoff_wins, playoff_losses, playoff_success, playoff_percentile)
 ```
 
 ```{r}
 write.csv(post_success, "../../data/processed/postseason_success.csv")
 ```
 
+```{r}
+fired <- c("TEN", "NYG", "ATL", "CLE", "LV", "BUF", "ARI", "BAL", "MIA")
+
+post_success %>% 
+  filter(season == 2025, team %in% fired) %>% 
+  select(season, team, playoff_wins, playoff_losses) %>% 
+  summarise(wins = sum(playoff_wins), losses = sum(playoff_losses), pct = wins/(wins+losses))
+```   
+```{r}
+superbowl_teams <- records %>% 
+  filter(round_reached == "SB") %>% 
+  mutate(close_win_pct = playoff_wins / (playoff_wins + playoff_losses)) %>% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %>% 
+  mutate(close_win_percentile = percent_rank(close_win_pct)) %>% 
+  select(season, team, coach, offense, defense, playoff_wins, playoff_losses, close_win_pct, close_win_percentile)
+
+superbowl_teams %>% 
+  ungroup() %>% 
+  summarise(wins = sum(playoff_wins), losses = sum(playoff_losses), pct = wins/(wins+losses), teamsY = sum(close_win_pct >= .5), teamsN = sum(close_win_pct < .5))
+```
+
+```{r}
+playoff_teams <- records %>% 
+  filter(made_playoffs) %>% 
+  mutate(close_win_pct = playoff_wins / (playoff_wins + playoff_losses)) %>% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %>% 
+  mutate(close_win_percentile = percent_rank(close_win_pct)) %>% 
+  select(season, team, coach, offense, defense, playoff_wins, playoff_losses, close_win_pct, close_win_percentile)
+
+playoff_teams %>% 
+  ungroup() %>% 
+  summarise(wins = sum(playoff_wins), losses = sum(playoff_losses), pct = wins/(wins+losses), teamsY = sum(close_win_pct >= .5), teamsN = sum(close_win_pct < .5))
+```
+
+```{r}
+coaches_2025 <- coaches %>% 
+  filter(Year == 2025) %>% select(Coach) %>% pull()
+
+post_success %>% 
+  group_by(coach) %>% 
+  filter(coach %in% coaches_2025) %>% 
+  summarise(avg_score = sum(playoff_percentile) / n(), n = n()) %>% 
+  arrange(desc(avg_score)) %>% 
+  filter(n > 2)
+```

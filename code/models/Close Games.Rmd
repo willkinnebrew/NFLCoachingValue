@@ -63,10 +63,15 @@ playoff_teams %>%
 ```
 
 ```{r}
+coaches_2025 <- coaches %>% 
+  filter(Year == 2025) %>% select(Coach) %>% pull()
+
 close_success %>% 
   group_by(coach) %>% 
+  filter(coach %in% coaches_2025) %>% 
   summarise(avg_score = sum(close_win_percentile) / n(), n = n()) %>% 
   arrange(desc(avg_score)) %>% 
   filter(n > 2)
 ```
+
 

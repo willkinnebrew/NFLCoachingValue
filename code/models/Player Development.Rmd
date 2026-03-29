@@ -76,7 +76,7 @@ apm_model <- lm(
         I(exp_lag1^2) +
         draft_pick +
         log(snaps_lag1 + 1) +
-        n_snaps + 
+        log(n_snaps + 1) + 
         experience +
         position,
   data = player_model_data

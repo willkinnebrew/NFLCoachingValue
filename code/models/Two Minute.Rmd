@@ -56,12 +56,14 @@ bs <- 1e4
 
 coaches_bs <- coaches %>% 
   rename(season = Year) %>% 
-  filter(season > 2015) %>% 
+  filter(season == 2025) %>% 
   select(Coach) %>% 
   distinct() %>% 
   pull()
 
 twomin_bs <- two_minute %>% 
+  filter(season > 2015) %>% 
+  #filter(season == 2025) %>% 
   select(wp_change, team = posteam, season) %>% 
   mutate(team = case_when(
     team == "OAK" ~ "LV",
@@ -126,4 +128,11 @@ ggplot(coaches_bs_results, aes(y = coach)) +
   theme(axis.text.y = element_text(size = 8))
 ```
 
+gettings stats from the close game scores for paper:
+```{r}
+twomin_bs %>% 
+  group_by(coach) %>% 
+  summarise(n = n()) %>% 
+  arrange(n)
+```
 

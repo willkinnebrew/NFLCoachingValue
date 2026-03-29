@@ -19,11 +19,58 @@ division_success <- records %>%
   # correcting it to a 0-1 scale
   mutate(division_win_percentile = percent_rank(division_win_pct),
          division_win_percentile = division_win_percentile/max(division_win_percentile)) %>% 
-  select(season, team, coach, offense, defense, div_wins, division_win_pct, division_win_percentile)
+  select(season, team, coach, offense, defense, div_wins, div_losses, division_win_pct, division_win_percentile)
 ```
 
 ```{r}
 write.csv(division_success, "../../data/processed/division_game_success.csv")
 ```
 
+```{r}
+fired <- c("TEN", "NYG", "ATL", "CLE", "LV", "BUF", "ARI", "BAL", "MIA")
 
+division_success %>% 
+  filter(season == 2025, team %in% fired) %>% 
+  select(season, coach, team, div_wins, div_losses) %>% 
+  group_by(coach) %>% 
+  summarise(wins = sum(div_wins), losses = sum(div_losses), pct = wins/(wins+losses))
+```
+```{r}
+superbowl_teams <- records %>% 
+  filter(round_reached == "SB") %>% 
+  mutate(div_win_pct = div_wins / (div_wins + div_losses)) %>% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %>% 
+  mutate(div_win_percentile = percent_rank(div_win_pct)) %>% 
+  select(season, team, coach, offense, defense, div_wins, div_losses, div_win_pct, div_win_percentile)
+
+superbowl_teams %>% 
+  ungroup() %>% 
+  summarise(wins = sum(div_wins), losses = sum(div_losses), pct = wins/(wins+losses), teamsY = sum(div_win_pct >= .5), teamsN = sum(div_win_pct < .5))
+```
+
+```{r}
+playoff_teams <- records %>% 
+  filter(made_playoffs) %>% 
+  mutate(div_win_pct = div_wins / (div_wins + div_losses)) %>% 
+  # making the percentile season-based, to account for some more context
+  group_by(season) %>% 
+  mutate(div_win_percentile = percent_rank(div_win_pct)) %>% 
+  select(season, team, coach, offense, defense, div_wins, div_losses, div_win_pct, div_win_percentile)
+
+playoff_teams %>% 
+  ungroup() %>% 
+  summarise(wins = sum(div_wins), losses = sum(div_losses), pct = wins/(wins+losses), teamsY = sum(div_win_pct >= .5), teamsN = sum(div_win_pct < .5))
+```
+
+```{r}
+coaches_2025 <- coaches %>% 
+  filter(Year == 2025) %>% select(Coach) %>% pull()
+
+division_success %>% 
+  group_by(coach) %>% 
+  filter(coach %in% coaches_2025) %>% 
+  summarise(avg_score = sum(division_win_percentile) / n(), n = n()) %>% 
+  arrange(desc(avg_score)) %>% 
+  filter(n > 2)
+```
