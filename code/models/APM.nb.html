@@ -1754,14 +1754,75 @@ display: none;
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KG5mbGZhc3RSKVxubGlicmFyeShuZmxyZWFkcilcbmxpYnJhcnkoTWF0cml4KVxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeShyc3RhbilcbmBgYCJ9 -->
-<pre class="r"><code>library(tidyverse)
-library(nflfastR)
-library(nflreadr)
-library(Matrix)
-library(stringr)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
+<pre class="r"><code>library(tidyverse)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhnZ3Bsb3Qy4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC40LjNXYXJuaW5nOiBwYWNrYWdlIOKAmGRwbHly4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC40LjPilIDilIAgQXR0YWNoaW5nIGNvcmUgdGlkeXZlcnNlIHBhY2thZ2VzIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMi4wLjAg4pSA4pSAXG7inJQgZHBseXIgICAgIDEuMS40ICAgICDinJQgcmVhZHIgICAgIDIuMS41XG7inJQgZm9yY2F0cyAgIDEuMC4wICAgICDinJQgc3RyaW5nciAgIDEuNS4xXG7inJQgZ2dwbG90MiAgIDQuMC4wICAgICDinJQgdGliYmxlICAgIDMuMi4xXG7inJQgbHVicmlkYXRlIDEuOS4zICAgICDinJQgdGlkeXIgICAgIDEuMy4xXG7inJQgcHVycnIgICAgIDEuMC4yICAgICDilIDilIAgQ29uZmxpY3RzIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG7inJYgZHBseXI6OmZpbHRlcigpIG1hc2tzIHN0YXRzOjpmaWx0ZXIoKVxu4pyWIGRwbHlyOjpsYWcoKSAgICBtYXNrcyBzdGF0czo6bGFnKClcbuKEuSBVc2UgdGhlIFx1MDAxYl04OztodHRwOi8vY29uZmxpY3RlZC5yLWxpYi5vcmcvXHUwMDA3Y29uZmxpY3RlZCBwYWNrYWdlXHUwMDFiXTg7O1x1MDAwNyB0byBmb3JjZSBhbGwgY29uZmxpY3RzIHRvIGJlY29tZSBlcnJvcnNcbiJ9 -->
+<pre><code>Warning: package ‘ggplot2’ was built under R version 4.4.3Warning: package ‘dplyr’ was built under R version 4.4.3── Attaching core tidyverse packages ──────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   4.0.0     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShuZmxmYXN0UilcbmBgYCJ9 -->
+<pre class="r"><code>library(nflfastR)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhuZmxmYXN0UuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4zUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RhdGEudGFibGUnOlxuICBtZXRob2QgICAgICAgICAgIGZyb21cbiAgcHJpbnQuZGF0YS50YWJsZSAgICAgXG4ifQ== -->
+<pre><code>Warning: package ‘nflfastR’ was built under R version 4.4.3Registered S3 method overwritten by &#39;data.table&#39;:
+  method           from
+  print.data.table     </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShuZmxyZWFkcilcbmBgYCJ9 -->
+<pre class="r"><code>library(nflreadr)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhuZmxyZWFkcuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4zXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYbmZscmVhZHLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOm5mbGZhc3RS4oCZOlxuXG4gICAgbG9hZF9wYnAsIGxvYWRfcGxheWVyX3N0YXRzXG4ifQ== -->
+<pre><code>Warning: package ‘nflreadr’ was built under R version 4.4.3
+Attaching package: ‘nflreadr’
+
+The following objects are masked from ‘package:nflfastR’:
+
+    load_pbp, load_player_stats</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShNYXRyaXgpXG5gYGAifQ== -->
+<pre class="r"><code>library(Matrix)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYTWF0cml44oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTp0aWR5cuKAmTpcblxuICAgIGV4cGFuZCwgcGFjaywgdW5wYWNrXG4ifQ== -->
+<pre><code>
+Attaching package: ‘Matrix’
+
+The following objects are masked from ‘package:tidyr’:
+
+    expand, pack, unpack</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShzdHJpbmdyKVxubGlicmFyeShyc3RhbilcbmBgYCJ9 -->
+<pre class="r"><code>library(stringr)
 library(rstan)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhyc3RhbuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4zTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBTdGFuSGVhZGVyc1xuV2FybmluZzogcGFja2FnZSDigJhTdGFuSGVhZGVyc+KAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4zXG5yc3RhbiB2ZXJzaW9uIDIuMzIuNyAoU3RhbiB2ZXJzaW9uIDIuMzIuMilcblxuRm9yIGV4ZWN1dGlvbiBvbiBhIGxvY2FsLCBtdWx0aWNvcmUgQ1BVIHdpdGggZXhjZXNzIFJBTSB3ZSByZWNvbW1lbmQgY2FsbGluZ1xub3B0aW9ucyhtYy5jb3JlcyA9IHBhcmFsbGVsOjpkZXRlY3RDb3JlcygpKS5cblRvIGF2b2lkIHJlY29tcGlsYXRpb24gb2YgdW5jaGFuZ2VkIFN0YW4gcHJvZ3JhbXMsIHdlIHJlY29tbWVuZCBjYWxsaW5nXG5yc3Rhbl9vcHRpb25zKGF1dG9fd3JpdGUgPSBUUlVFKVxuRm9yIHdpdGhpbi1jaGFpbiB0aHJlYWRpbmcgdXNpbmcgYHJlZHVjZV9zdW0oKWAgb3IgYG1hcF9yZWN0KClgIFN0YW4gZnVuY3Rpb25zLFxuY2hhbmdlIGB0aHJlYWRzX3Blcl9jaGFpbmAgb3B0aW9uOlxucnN0YW5fb3B0aW9ucyh0aHJlYWRzX3Blcl9jaGFpbiA9IDEpXG5cbkRvIG5vdCBzcGVjaWZ5ICctbWFyY2g9bmF0aXZlJyBpbiAnTE9DQUxfQ1BQRkxBR1MnIG9yIGEgTWFrZXZhcnMgZmlsZVxuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYcnN0YW7igJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTp0aWR5cuKAmTpcblxuICAgIGV4dHJhY3RcbiJ9 -->
+<pre><code>Warning: package ‘rstan’ was built under R version 4.4.3Loading required package: StanHeaders
+Warning: package ‘StanHeaders’ was built under R version 4.4.3
+rstan version 2.32.7 (Stan version 2.32.2)
+
+For execution on a local, multicore CPU with excess RAM we recommend calling
+options(mc.cores = parallel::detectCores()).
+To avoid recompilation of unchanged Stan programs, we recommend calling
+rstan_options(auto_write = TRUE)
+For within-chain threading using `reduce_sum()` or `map_rect()` Stan functions,
+change `threads_per_chain` option:
+rstan_options(threads_per_chain = 1)
+
+Do not specify &#39;-march=native&#39; in &#39;LOCAL_CPPFLAGS&#39; or a Makevars file
+
+Attaching package: ‘rstan’
+
+The following object is masked from ‘package:tidyr’:
+
+    extract</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
@@ -1800,18 +1861,323 @@ rstan_options(auto_write = TRUE)
 
 stan_model &lt;- stan_model(model_code = stan_code)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicmVjb21waWxpbmcgdG8gYXZvaWQgY3Jhc2hpbmcgUiBzZXNzaW9uXG4ifQ== -->
-<pre><code>recompiling to avoid crashing R session</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueWVhcnMgPC0gMjAxNjoyMDI1XG5cbmZvciAoeWVhciBpbiB5ZWFycyl7XG5kYXRhIDwtIGxvYWRfcGJwKHllYXIpXG5cbnBhcnQgPC0gbG9hZF9wYXJ0aWNpcGF0aW9uKHllYXIpXG5cbnBicDIyIDwtIGRhdGEgJT4lXG4gIGlubmVyX2pvaW4oXG4gICAgcGFydCxcbiAgICBieSA9IGMoXCJnYW1lX2lkXCIgPSBcIm5mbHZlcnNlX2dhbWVfaWRcIiwgXCJwbGF5X2lkXCIpXG4gIClcblxuXG5wYnAyMiA8LSBwYnAyMiAlPiVcbiAgbXV0YXRlKFxuICAgIG9mZl9saXN0ID0gc3RyX3NwbGl0KG9mZmVuc2VfcGxheWVycywgXCI7XCIpLFxuICAgIGRlZl9saXN0ID0gc3RyX3NwbGl0KGRlZmVuc2VfcGxheWVycywgXCI7XCIpXG4gICkgJT4lIFxuICBmaWx0ZXIoIWlzLm5hKGVwYSkpXG4gIFxuYXBtX2xvbmcgPC0gcGJwMjIgJT4lXG4gIHNlbGVjdChnYW1lX2lkLCBwbGF5X2lkLCBlcGEsIG9mZl9saXN0LCBkZWZfbGlzdCkgJT4lXG4gIHVubmVzdChvZmZfbGlzdCkgJT4lXG4gIG11dGF0ZShcbiAgICBuZmxfaWQgPSBvZmZfbGlzdCxcbiAgICBzaWduID0gMVxuICApICU+JVxuICBzZWxlY3QoZ2FtZV9pZCwgcGxheV9pZCwgZXBhLCBuZmxfaWQsIHNpZ24pICU+JVxuICBiaW5kX3Jvd3MoXG4gICAgcGJwMjIgJT4lXG4gICAgICBzZWxlY3QoZ2FtZV9pZCwgcGxheV9pZCwgZXBhLCBkZWZfbGlzdCkgJT4lXG4gICAgICB1bm5lc3QoZGVmX2xpc3QpICU+JVxuICAgICAgbXV0YXRlKFxuICAgICAgICBuZmxfaWQgPSBkZWZfbGlzdCxcbiAgICAgICAgc2lnbiA9IC0xXG4gICAgICApICU+JVxuICAgICAgc2VsZWN0KGdhbWVfaWQsIHBsYXlfaWQsIGVwYSwgbmZsX2lkLCBzaWduKVxuICApXG5cbmFwbV9sb25nICU+JVxuICBjb3VudChnYW1lX2lkLCBwbGF5X2lkKSAlPiVcbiAgY291bnQobilcblxucGxheWVyX2luZGV4IDwtIGFwbV9sb25nICU+JVxuICBkaXN0aW5jdChuZmxfaWQpICU+JVxuICBhcnJhbmdlKG5mbF9pZCkgJT4lXG4gIG11dGF0ZShwbGF5ZXJfaWR4ID0gcm93X251bWJlcigpKVxuXG5hcG1fbG9uZyA8LSBhcG1fbG9uZyAlPiVcbiAgbGVmdF9qb2luKHBsYXllcl9pbmRleCwgYnkgPSBcIm5mbF9pZFwiKVxuXG5wbGF5X2luZGV4IDwtIGFwbV9sb25nICU+JVxuICBkaXN0aW5jdChnYW1lX2lkLCBwbGF5X2lkKSAlPiVcbiAgYXJyYW5nZShnYW1lX2lkLCBwbGF5X2lkKSAlPiVcbiAgbXV0YXRlKHBsYXlfaWR4ID0gcm93X251bWJlcigpKVxuXG5hcG1fbG9uZyA8LSBhcG1fbG9uZyAlPiVcbiAgbGVmdF9qb2luKHBsYXlfaW5kZXgsIGJ5ID0gYyhcImdhbWVfaWRcIiwgXCJwbGF5X2lkXCIpKVxuXG5YIDwtIHNwYXJzZU1hdHJpeChcbiAgaSA9IGFwbV9sb25nJHBsYXlfaWR4LFxuICBqID0gYXBtX2xvbmckcGxheWVyX2lkeCxcbiAgeCA9IGFwbV9sb25nJHNpZ24sXG4gIGRpbXMgPSBjKG5yb3cocGxheV9pbmRleCksIG5yb3cocGxheWVyX2luZGV4KSlcbilcblxueSA8LSBwYnAyMiAlPiVcbiAgZGlzdGluY3QoZ2FtZV9pZCwgcGxheV9pZCwgZXBhKSAlPiVcbiAgYXJyYW5nZShnYW1lX2lkLCBwbGF5X2lkKSAlPiVcbiAgcHVsbChlcGEpXG5cblxuXG5zdGFuX2RhdGEgPC0gbGlzdChcbiAgTiA9IG5yb3coWCksXG4gIFAgPSBuY29sKFgpLFxuICBYID0gYXMubWF0cml4KFgpLFxuICB5ID0geVxuKVxuXG5maXQgPC0gc2FtcGxpbmcoXG4gIHN0YW5fbW9kZWwsXG4gIGRhdGEgPSBzdGFuX2RhdGEsXG4gIGNoYWlucyA9IDQsXG4gIGl0ZXIgPSAxMDAwLFxuICB3YXJtdXAgPSA1MDAsXG4gIHJlZnJlc2ggPSAxMCwgICAgICAgICMgPC0tIHByaW50cyBldmVyeSAxMCBpdGVyYXRpb25zXG4gIHZlcmJvc2UgPSBUUlVFLCAgICAgICMgPC0tIGV4dHJhIGRpYWdub3N0aWNzXG4gIGNvbnRyb2wgPSBsaXN0KGFkYXB0X2RlbHRhID0gMC45KVxuKVxuXG5wb3N0IDwtIHJzdGFuOjpleHRyYWN0KGZpdClcbmJldGFfbWVhbiA8LSBjb2xNZWFucyhwb3N0JGJldGEpXG5iZXRhX3NkICAgPC0gYXBwbHkocG9zdCRiZXRhLCAyLCBzZClcblxucGxheWVyX2FwbSA8LSBwbGF5ZXJfaW5kZXggJT4lXG4gIG11dGF0ZShcbiAgICBhcG0gPSBiZXRhX21lYW4sXG4gICAgYXBtX3NkID0gYmV0YV9zZCxcbiAgICBhcG1fcGVyX3BsYXkgPSBhcG0gLyAxMVxuICApXG5cbnBsYXllcnMgPC0gbG9hZF9yb3N0ZXJzKHllYXIpXG5cbnBsYXllcl9hcG1fbmFtZXMgPC0gcGxheWVyX2FwbSAlPiUgXG4gIGxlZnRfam9pbihwbGF5ZXJzICU+JSBzZWxlY3QobmZsX2lkID0gZ3Npc19pZCwgZnVsbF9uYW1lLCB0ZWFtLCBwb3NpdGlvbiwgc2Vhc29uKSwgYnkgPSBjKFwibmZsX2lkXCIpKSAlPiUgXG4gIGFycmFuZ2UoZGVzYyhhcG0pKVxuXG53cml0ZS5jc3YocGxheWVyX2FwbV9uYW1lcywgZmlsZSA9IHBhc3RlMChcIi4uLy4uL2RhdGEvcHJvY2Vzc2VkL3BsYXllcl9hcG0yX1wiLCB5ZWFyLCBcIi5jc3ZcIikpXG59XG5gYGAifQ== -->
+<pre class="r"><code>years &lt;- 2016:2025
+
+for (year in years){
+data &lt;- load_pbp(year)
+
+part &lt;- load_participation(year)
+
+pbp22 &lt;- data %&gt;%
+  inner_join(
+    part,
+    by = c(&quot;game_id&quot; = &quot;nflverse_game_id&quot;, &quot;play_id&quot;)
+  )
+
+
+pbp22 &lt;- pbp22 %&gt;%
+  mutate(
+    off_list = str_split(offense_players, &quot;;&quot;),
+    def_list = str_split(defense_players, &quot;;&quot;)
+  ) %&gt;% 
+  filter(!is.na(epa))
+  
+apm_long &lt;- pbp22 %&gt;%
+  select(game_id, play_id, epa, off_list, def_list) %&gt;%
+  unnest(off_list) %&gt;%
+  mutate(
+    nfl_id = off_list,
+    sign = 1
+  ) %&gt;%
+  select(game_id, play_id, epa, nfl_id, sign) %&gt;%
+  bind_rows(
+    pbp22 %&gt;%
+      select(game_id, play_id, epa, def_list) %&gt;%
+      unnest(def_list) %&gt;%
+      mutate(
+        nfl_id = def_list,
+        sign = -1
+      ) %&gt;%
+      select(game_id, play_id, epa, nfl_id, sign)
+  )
+
+apm_long %&gt;%
+  count(game_id, play_id) %&gt;%
+  count(n)
+
+player_index &lt;- apm_long %&gt;%
+  distinct(nfl_id) %&gt;%
+  arrange(nfl_id) %&gt;%
+  mutate(player_idx = row_number())
+
+apm_long &lt;- apm_long %&gt;%
+  left_join(player_index, by = &quot;nfl_id&quot;)
+
+play_index &lt;- apm_long %&gt;%
+  distinct(game_id, play_id) %&gt;%
+  arrange(game_id, play_id) %&gt;%
+  mutate(play_idx = row_number())
+
+apm_long &lt;- apm_long %&gt;%
+  left_join(play_index, by = c(&quot;game_id&quot;, &quot;play_id&quot;))
+
+X &lt;- sparseMatrix(
+  i = apm_long$play_idx,
+  j = apm_long$player_idx,
+  x = apm_long$sign,
+  dims = c(nrow(play_index), nrow(player_index))
+)
+
+y &lt;- pbp22 %&gt;%
+  distinct(game_id, play_id, epa) %&gt;%
+  arrange(game_id, play_id) %&gt;%
+  pull(epa)
+
+
+
+stan_data &lt;- list(
+  N = nrow(X),
+  P = ncol(X),
+  X = as.matrix(X),
+  y = y
+)
+
+fit &lt;- sampling(
+  stan_model,
+  data = stan_data,
+  chains = 4,
+  iter = 1000,
+  warmup = 500,
+  refresh = 10,        # &lt;-- prints every 10 iterations
+  verbose = TRUE,      # &lt;-- extra diagnostics
+  control = list(adapt_delta = 0.9)
+)
+
+post &lt;- rstan::extract(fit)
+beta_mean &lt;- colMeans(post$beta)
+beta_sd   &lt;- apply(post$beta, 2, sd)
+
+player_apm &lt;- player_index %&gt;%
+  mutate(
+    apm = beta_mean,
+    apm_sd = beta_sd,
+    apm_per_play = apm / 11
+  )
+
+players &lt;- load_rosters(year)
+
+player_apm_names &lt;- player_apm %&gt;% 
+  left_join(players %&gt;% select(nfl_id = gsis_id, full_name, team, position, season), by = c(&quot;nfl_id&quot;)) %&gt;% 
+  arrange(desc(apm))
+
+write.csv(player_apm_names, file = paste0(&quot;../../data/processed/player_apm2_&quot;, year, &quot;.csv&quot;))
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTm90ZTogbmZscmVhZHIgY2FjaGVzIChpLmUuLCBzdG9yZXMgYSBzYXZlZCB2ZXJzaW9uKSBkYXRhIGJ5IGRlZmF1bHQuXG5JZiB5b3UgZXhwZWN0IGRpZmZlcmVudCBvdXRwdXQgdHJ5IG9uZSBvZiB0aGUgZm9sbG93aW5nOlxu4oS5IFJlc3RhcnQgeW91ciBSIFNlc3Npb24gb3JcbuKEuSBSdW4gYG5mbHJlYWRyOjouY2xlYXJfY2FjaGUoKWAuXG5UbyBkaXNhYmxlIHRoaXMgd2FybmluZywgcnVuIGBvcHRpb25zKG5mbHJlYWRyLnZlcmJvc2UgPSBGQUxTRSlgIG9yIGFkZCBpdCB0byB5b3VyIC5ScHJvZmlsZVN0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Note: nflreadr caches (i.e., stores a saved version) data by default.
+If you expect different output try one of the following:
+ℹ Restart your R Session or
+ℹ Run `nflreadr::.clear_cache()`.
+To disable this warning, run `options(nflreadr.verbose = FALSE)` or add it to your .RprofileStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xNCwgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1N0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.14, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xNywgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1N0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.17, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xMiwgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1N0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.12, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogQnVsayBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIG1lYW5zIGFuZCBtZWRpYW5zIG1heSBiZSB1bnJlbGlhYmxlLlxuUnVubmluZyB0aGUgY2hhaW5zIGZvciBtb3JlIGl0ZXJhdGlvbnMgbWF5IGhlbHAuIFNlZVxuaHR0cHM6Ly9tYy1zdGFuLm9yZy9taXNjL3dhcm5pbmdzLmh0bWwjYnVsay1lc3NXYXJuaW5nOiBUYWlsIEVmZmVjdGl2ZSBTYW1wbGVzIFNpemUgKEVTUykgaXMgdG9vIGxvdywgaW5kaWNhdGluZyBwb3N0ZXJpb3IgdmFyaWFuY2VzIGFuZCB0YWlsIHF1YW50aWxlcyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI3RhaWwtZXNzU3RvcmluZyBjb3VudHMgaW4gYG5uYCwgYXMgYG5gIGFscmVhZHkgcHJlc2VudCBpbiBpbnB1dFxuIn0= -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xMSwgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1N0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.11, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xMSwgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1N0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.11, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xMywgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1N0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.13, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xNCwgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1N0b3JpbmcgY291bnRzIGluIGBubmAsIGFzIGBuYCBhbHJlYWR5IHByZXNlbnQgaW4gaW5wdXRcbiJ9 -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.14, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4xLCBpbmRpY2F0aW5nIGNoYWlucyBoYXZlIG5vdCBtaXhlZC5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI3ItaGF0V2FybmluZzogQnVsayBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIG1lYW5zIGFuZCBtZWRpYW5zIG1heSBiZSB1bnJlbGlhYmxlLlxuUnVubmluZyB0aGUgY2hhaW5zIGZvciBtb3JlIGl0ZXJhdGlvbnMgbWF5IGhlbHAuIFNlZVxuaHR0cHM6Ly9tYy1zdGFuLm9yZy9taXNjL3dhcm5pbmdzLmh0bWwjYnVsay1lc3NXYXJuaW5nOiBUYWlsIEVmZmVjdGl2ZSBTYW1wbGVzIFNpemUgKEVTUykgaXMgdG9vIGxvdywgaW5kaWNhdGluZyBwb3N0ZXJpb3IgdmFyaWFuY2VzIGFuZCB0YWlsIHF1YW50aWxlcyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI3RhaWwtZXNzU3RvcmluZyBjb3VudHMgaW4gYG5uYCwgYXMgYG5gIGFscmVhZHkgcHJlc2VudCBpbiBpbnB1dFxuIn0= -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.1, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-essStoring counts in `nn`, as `n` already present in input</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DSEVDS0lORyBEQVRBIEFORCBQUkVQUk9DRVNTSU5HIEZPUiBNT0RFTCAnYW5vbl9tb2RlbCcgTk9XLlxuXG5DT01QSUxJTkcgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cblxuU1RBUlRJTkcgU0FNUExFUiBGT1IgTU9ERUwgJ2Fub25fbW9kZWwnIE5PVy5cbiJ9 -->
+<pre><code>
+CHECKING DATA AND PREPROCESSING FOR MODEL &#39;anon_model&#39; NOW.
+
+COMPILING MODEL &#39;anon_model&#39; NOW.
+
+STARTING SAMPLER FOR MODEL &#39;anon_model&#39; NOW.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVGhlcmUgd2VyZSA0IGNoYWlucyB3aGVyZSB0aGUgZXN0aW1hdGVkIEJheWVzaWFuIEZyYWN0aW9uIG9mIE1pc3NpbmcgSW5mb3JtYXRpb24gd2FzIGxvdy4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNiZm1pLWxvd1dhcm5pbmc6IEV4YW1pbmUgdGhlIHBhaXJzKCkgcGxvdCB0byBkaWFnbm9zZSBzYW1wbGluZyBwcm9ibGVtc1xuV2FybmluZzogVGhlIGxhcmdlc3QgUi1oYXQgaXMgMS4wOSwgaW5kaWNhdGluZyBjaGFpbnMgaGF2ZSBub3QgbWl4ZWQuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCNyLWhhdFdhcm5pbmc6IEJ1bGsgRWZmZWN0aXZlIFNhbXBsZXMgU2l6ZSAoRVNTKSBpcyB0b28gbG93LCBpbmRpY2F0aW5nIHBvc3RlcmlvciBtZWFucyBhbmQgbWVkaWFucyBtYXkgYmUgdW5yZWxpYWJsZS5cblJ1bm5pbmcgdGhlIGNoYWlucyBmb3IgbW9yZSBpdGVyYXRpb25zIG1heSBoZWxwLiBTZWVcbmh0dHBzOi8vbWMtc3Rhbi5vcmcvbWlzYy93YXJuaW5ncy5odG1sI2J1bGstZXNzV2FybmluZzogVGFpbCBFZmZlY3RpdmUgU2FtcGxlcyBTaXplIChFU1MpIGlzIHRvbyBsb3csIGluZGljYXRpbmcgcG9zdGVyaW9yIHZhcmlhbmNlcyBhbmQgdGFpbCBxdWFudGlsZXMgbWF5IGJlIHVucmVsaWFibGUuXG5SdW5uaW5nIHRoZSBjaGFpbnMgZm9yIG1vcmUgaXRlcmF0aW9ucyBtYXkgaGVscC4gU2VlXG5odHRwczovL21jLXN0YW4ub3JnL21pc2Mvd2FybmluZ3MuaHRtbCN0YWlsLWVzc1xuIn0= -->
+<pre><code>Warning: There were 4 chains where the estimated Bayesian Fraction of Missing Information was low. See
+https://mc-stan.org/misc/warnings.html#bfmi-lowWarning: Examine the pairs() plot to diagnose sampling problems
+Warning: The largest R-hat is 1.09, indicating chains have not mixed.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#r-hatWarning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#bulk-essWarning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.
+Running the chains for more iterations may help. See
+https://mc-stan.org/misc/warnings.html#tail-ess</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShuZmxmYXN0UikNCmxpYnJhcnkobmZscmVhZHIpDQpsaWJyYXJ5KE1hdHJpeCkNCmxpYnJhcnkoc3RyaW5ncikNCmxpYnJhcnkocnN0YW4pDQpgYGANCg0KYGBge3J9DQpzdGFuX2NvZGUgPC0gIg0KZGF0YSB7DQogIGludDxsb3dlcj0xPiBOOyAgICAgICAgICAgICAgIC8vIG51bWJlciBvZiBwbGF5cw0KICBpbnQ8bG93ZXI9MT4gUDsgICAgICAgICAgICAgICAvLyBudW1iZXIgb2YgcGxheWVycw0KICBtYXRyaXhbTiwgUF0gWDsgICAgICAgICAgICAgICAvLyBkZXNpZ24gbWF0cml4DQogIHZlY3RvcltOXSB5OyAgICAgICAgICAgICAgICAgIC8vIEVQQQ0KfQ0KDQpwYXJhbWV0ZXJzIHsNCiAgcmVhbCBhbHBoYTsgICAgICAgICAgICAgICAgICAgLy8gYmFzZWxpbmUgRVBBDQogIHZlY3RvcltQXSBiZXRhOyAgICAgICAgICAgICAgIC8vIHBsYXllciBBUE0NCiAgcmVhbDxsb3dlcj0wPiBzaWdtYTsgICAgICAgICAgLy8gbm9pc2UNCiAgcmVhbDxsb3dlcj0wPiB0YXU7ICAgICAgICAgICAgLy8gc2hyaW5rYWdlDQp9DQoNCm1vZGVsIHsNCiAgLy8gUHJpb3JzDQogIGFscGhhIH4gbm9ybWFsKDAsIDAuNSk7DQogIHRhdSAgIH4gbm9ybWFsKDAsIDAuNSk7DQogIGJldGEgIH4gbm9ybWFsKDAsIHRhdSk7DQogIHNpZ21hIH4gbm9ybWFsKDAsIDEpOw0KDQogIC8vIExpa2VsaWhvb2QNCiAgeSB+IG5vcm1hbChhbHBoYSArIFggKiBiZXRhLCBzaWdtYSk7DQp9DQoiDQoNCg0Kb3B0aW9ucyhtYy5jb3JlcyA9IHBhcmFsbGVsOjpkZXRlY3RDb3JlcygpKQ0KcnN0YW5fb3B0aW9ucyhhdXRvX3dyaXRlID0gVFJVRSkNCg0Kc3Rhbl9tb2RlbCA8LSBzdGFuX21vZGVsKG1vZGVsX2NvZGUgPSBzdGFuX2NvZGUpDQpgYGANCg0KYGBge3J9DQp5ZWFycyA8LSAyMDE2OjIwMjUNCg0KZm9yICh5ZWFyIGluIHllYXJzKXsNCmRhdGEgPC0gbG9hZF9wYnAoeWVhcikNCg0KcGFydCA8LSBsb2FkX3BhcnRpY2lwYXRpb24oeWVhcikNCg0KcGJwMjIgPC0gZGF0YSAlPiUNCiAgaW5uZXJfam9pbigNCiAgICBwYXJ0LA0KICAgIGJ5ID0gYygiZ2FtZV9pZCIgPSAibmZsdmVyc2VfZ2FtZV9pZCIsICJwbGF5X2lkIikNCiAgKQ0KDQoNCnBicDIyIDwtIHBicDIyICU+JQ0KICBtdXRhdGUoDQogICAgb2ZmX2xpc3QgPSBzdHJfc3BsaXQob2ZmZW5zZV9wbGF5ZXJzLCAiOyIpLA0KICAgIGRlZl9saXN0ID0gc3RyX3NwbGl0KGRlZmVuc2VfcGxheWVycywgIjsiKQ0KICApICU+JSANCiAgZmlsdGVyKCFpcy5uYShlcGEpKQ0KICANCmFwbV9sb25nIDwtIHBicDIyICU+JQ0KICBzZWxlY3QoZ2FtZV9pZCwgcGxheV9pZCwgZXBhLCBvZmZfbGlzdCwgZGVmX2xpc3QpICU+JQ0KICB1bm5lc3Qob2ZmX2xpc3QpICU+JQ0KICBtdXRhdGUoDQogICAgbmZsX2lkID0gb2ZmX2xpc3QsDQogICAgc2lnbiA9IDENCiAgKSAlPiUNCiAgc2VsZWN0KGdhbWVfaWQsIHBsYXlfaWQsIGVwYSwgbmZsX2lkLCBzaWduKSAlPiUNCiAgYmluZF9yb3dzKA0KICAgIHBicDIyICU+JQ0KICAgICAgc2VsZWN0KGdhbWVfaWQsIHBsYXlfaWQsIGVwYSwgZGVmX2xpc3QpICU+JQ0KICAgICAgdW5uZXN0KGRlZl9saXN0KSAlPiUNCiAgICAgIG11dGF0ZSgNCiAgICAgICAgbmZsX2lkID0gZGVmX2xpc3QsDQogICAgICAgIHNpZ24gPSAtMQ0KICAgICAgKSAlPiUNCiAgICAgIHNlbGVjdChnYW1lX2lkLCBwbGF5X2lkLCBlcGEsIG5mbF9pZCwgc2lnbikNCiAgKQ0KDQphcG1fbG9uZyAlPiUNCiAgY291bnQoZ2FtZV9pZCwgcGxheV9pZCkgJT4lDQogIGNvdW50KG4pDQoNCnBsYXllcl9pbmRleCA8LSBhcG1fbG9uZyAlPiUNCiAgZGlzdGluY3QobmZsX2lkKSAlPiUNCiAgYXJyYW5nZShuZmxfaWQpICU+JQ0KICBtdXRhdGUocGxheWVyX2lkeCA9IHJvd19udW1iZXIoKSkNCg0KYXBtX2xvbmcgPC0gYXBtX2xvbmcgJT4lDQogIGxlZnRfam9pbihwbGF5ZXJfaW5kZXgsIGJ5ID0gIm5mbF9pZCIpDQoNCnBsYXlfaW5kZXggPC0gYXBtX2xvbmcgJT4lDQogIGRpc3RpbmN0KGdhbWVfaWQsIHBsYXlfaWQpICU+JQ0KICBhcnJhbmdlKGdhbWVfaWQsIHBsYXlfaWQpICU+JQ0KICBtdXRhdGUocGxheV9pZHggPSByb3dfbnVtYmVyKCkpDQoNCmFwbV9sb25nIDwtIGFwbV9sb25nICU+JQ0KICBsZWZ0X2pvaW4ocGxheV9pbmRleCwgYnkgPSBjKCJnYW1lX2lkIiwgInBsYXlfaWQiKSkNCg0KWCA8LSBzcGFyc2VNYXRyaXgoDQogIGkgPSBhcG1fbG9uZyRwbGF5X2lkeCwNCiAgaiA9IGFwbV9sb25nJHBsYXllcl9pZHgsDQogIHggPSBhcG1fbG9uZyRzaWduLA0KICBkaW1zID0gYyhucm93KHBsYXlfaW5kZXgpLCBucm93KHBsYXllcl9pbmRleCkpDQopDQoNCnkgPC0gcGJwMjIgJT4lDQogIGRpc3RpbmN0KGdhbWVfaWQsIHBsYXlfaWQsIGVwYSkgJT4lDQogIGFycmFuZ2UoZ2FtZV9pZCwgcGxheV9pZCkgJT4lDQogIHB1bGwoZXBhKQ0KDQoNCg0Kc3Rhbl9kYXRhIDwtIGxpc3QoDQogIE4gPSBucm93KFgpLA0KICBQID0gbmNvbChYKSwNCiAgWCA9IGFzLm1hdHJpeChYKSwNCiAgeSA9IHkNCikNCg0KZml0IDwtIHNhbXBsaW5nKA0KICBzdGFuX21vZGVsLA0KICBkYXRhID0gc3Rhbl9kYXRhLA0KICBjaGFpbnMgPSA0LA0KICBpdGVyID0gMTAwMCwNCiAgd2FybXVwID0gNTAwLA0KICByZWZyZXNoID0gMTAsICAgICAgICAjIDwtLSBwcmludHMgZXZlcnkgMTAgaXRlcmF0aW9ucw0KICB2ZXJib3NlID0gVFJVRSwgICAgICAjIDwtLSBleHRyYSBkaWFnbm9zdGljcw0KICBjb250cm9sID0gbGlzdChhZGFwdF9kZWx0YSA9IDAuOSkNCikNCg0KcG9zdCA8LSByc3Rhbjo6ZXh0cmFjdChmaXQpDQpiZXRhX21lYW4gPC0gY29sTWVhbnMocG9zdCRiZXRhKQ0KYmV0YV9zZCAgIDwtIGFwcGx5KHBvc3QkYmV0YSwgMiwgc2QpDQoNCnBsYXllcl9hcG0gPC0gcGxheWVyX2luZGV4ICU+JQ0KICBtdXRhdGUoDQogICAgYXBtID0gYmV0YV9tZWFuLA0KICAgIGFwbV9zZCA9IGJldGFfc2QsDQogICAgYXBtX3Blcl9wbGF5ID0gYXBtIC8gMTENCiAgKQ0KDQpwbGF5ZXJzIDwtIGxvYWRfcm9zdGVycyh5ZWFyKQ0KDQpwbGF5ZXJfYXBtX25hbWVzIDwtIHBsYXllcl9hcG0gJT4lIA0KICBsZWZ0X2pvaW4ocGxheWVycyAlPiUgc2VsZWN0KG5mbF9pZCA9IGdzaXNfaWQsIGZ1bGxfbmFtZSwgdGVhbSwgcG9zaXRpb24sIHNlYXNvbiksIGJ5ID0gYygibmZsX2lkIikpICU+JSANCiAgYXJyYW5nZShkZXNjKGFwbSkpDQoNCndyaXRlLmNzdihwbGF5ZXJfYXBtX25hbWVzLCBmaWxlID0gcGFzdGUwKCIuLi8uLi9kYXRhL3Byb2Nlc3NlZC9wbGF5ZXJfYXBtXyIsIHllYXIsICIuY3N2IikpDQp9DQpgYGANCg0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShuZmxmYXN0UikNCmxpYnJhcnkobmZscmVhZHIpDQpsaWJyYXJ5KE1hdHJpeCkNCmxpYnJhcnkoc3RyaW5ncikNCmxpYnJhcnkocnN0YW4pDQpgYGANCg0KYGBge3J9DQpzdGFuX2NvZGUgPC0gIg0KZGF0YSB7DQogIGludDxsb3dlcj0xPiBOOyAgICAgICAgICAgICAgIC8vIG51bWJlciBvZiBwbGF5cw0KICBpbnQ8bG93ZXI9MT4gUDsgICAgICAgICAgICAgICAvLyBudW1iZXIgb2YgcGxheWVycw0KICBtYXRyaXhbTiwgUF0gWDsgICAgICAgICAgICAgICAvLyBkZXNpZ24gbWF0cml4DQogIHZlY3RvcltOXSB5OyAgICAgICAgICAgICAgICAgIC8vIEVQQQ0KfQ0KDQpwYXJhbWV0ZXJzIHsNCiAgcmVhbCBhbHBoYTsgICAgICAgICAgICAgICAgICAgLy8gYmFzZWxpbmUgRVBBDQogIHZlY3RvcltQXSBiZXRhOyAgICAgICAgICAgICAgIC8vIHBsYXllciBBUE0NCiAgcmVhbDxsb3dlcj0wPiBzaWdtYTsgICAgICAgICAgLy8gbm9pc2UNCiAgcmVhbDxsb3dlcj0wPiB0YXU7ICAgICAgICAgICAgLy8gc2hyaW5rYWdlDQp9DQoNCm1vZGVsIHsNCiAgLy8gUHJpb3JzDQogIGFscGhhIH4gbm9ybWFsKDAsIDAuNSk7DQogIHRhdSAgIH4gbm9ybWFsKDAsIDAuNSk7DQogIGJldGEgIH4gbm9ybWFsKDAsIHRhdSk7DQogIHNpZ21hIH4gbm9ybWFsKDAsIDEpOw0KDQogIC8vIExpa2VsaWhvb2QNCiAgeSB+IG5vcm1hbChhbHBoYSArIFggKiBiZXRhLCBzaWdtYSk7DQp9DQoiDQoNCg0Kb3B0aW9ucyhtYy5jb3JlcyA9IHBhcmFsbGVsOjpkZXRlY3RDb3JlcygpKQ0KcnN0YW5fb3B0aW9ucyhhdXRvX3dyaXRlID0gVFJVRSkNCg0Kc3Rhbl9tb2RlbCA8LSBzdGFuX21vZGVsKG1vZGVsX2NvZGUgPSBzdGFuX2NvZGUpDQpgYGANCg0KYGBge3J9DQp5ZWFycyA8LSAyMDE2OjIwMjUNCg0KZm9yICh5ZWFyIGluIHllYXJzKXsNCmRhdGEgPC0gbG9hZF9wYnAoeWVhcikNCg0KcGFydCA8LSBsb2FkX3BhcnRpY2lwYXRpb24oeWVhcikNCg0KcGJwMjIgPC0gZGF0YSAlPiUNCiAgaW5uZXJfam9pbigNCiAgICBwYXJ0LA0KICAgIGJ5ID0gYygiZ2FtZV9pZCIgPSAibmZsdmVyc2VfZ2FtZV9pZCIsICJwbGF5X2lkIikNCiAgKQ0KDQoNCnBicDIyIDwtIHBicDIyICU+JQ0KICBtdXRhdGUoDQogICAgb2ZmX2xpc3QgPSBzdHJfc3BsaXQob2ZmZW5zZV9wbGF5ZXJzLCAiOyIpLA0KICAgIGRlZl9saXN0ID0gc3RyX3NwbGl0KGRlZmVuc2VfcGxheWVycywgIjsiKQ0KICApICU+JSANCiAgZmlsdGVyKCFpcy5uYShlcGEpKQ0KICANCmFwbV9sb25nIDwtIHBicDIyICU+JQ0KICBzZWxlY3QoZ2FtZV9pZCwgcGxheV9pZCwgZXBhLCBvZmZfbGlzdCwgZGVmX2xpc3QpICU+JQ0KICB1bm5lc3Qob2ZmX2xpc3QpICU+JQ0KICBtdXRhdGUoDQogICAgbmZsX2lkID0gb2ZmX2xpc3QsDQogICAgc2lnbiA9IDENCiAgKSAlPiUNCiAgc2VsZWN0KGdhbWVfaWQsIHBsYXlfaWQsIGVwYSwgbmZsX2lkLCBzaWduKSAlPiUNCiAgYmluZF9yb3dzKA0KICAgIHBicDIyICU+JQ0KICAgICAgc2VsZWN0KGdhbWVfaWQsIHBsYXlfaWQsIGVwYSwgZGVmX2xpc3QpICU+JQ0KICAgICAgdW5uZXN0KGRlZl9saXN0KSAlPiUNCiAgICAgIG11dGF0ZSgNCiAgICAgICAgbmZsX2lkID0gZGVmX2xpc3QsDQogICAgICAgIHNpZ24gPSAtMQ0KICAgICAgKSAlPiUNCiAgICAgIHNlbGVjdChnYW1lX2lkLCBwbGF5X2lkLCBlcGEsIG5mbF9pZCwgc2lnbikNCiAgKQ0KDQphcG1fbG9uZyAlPiUNCiAgY291bnQoZ2FtZV9pZCwgcGxheV9pZCkgJT4lDQogIGNvdW50KG4pDQoNCnBsYXllcl9pbmRleCA8LSBhcG1fbG9uZyAlPiUNCiAgZGlzdGluY3QobmZsX2lkKSAlPiUNCiAgYXJyYW5nZShuZmxfaWQpICU+JQ0KICBtdXRhdGUocGxheWVyX2lkeCA9IHJvd19udW1iZXIoKSkNCg0KYXBtX2xvbmcgPC0gYXBtX2xvbmcgJT4lDQogIGxlZnRfam9pbihwbGF5ZXJfaW5kZXgsIGJ5ID0gIm5mbF9pZCIpDQoNCnBsYXlfaW5kZXggPC0gYXBtX2xvbmcgJT4lDQogIGRpc3RpbmN0KGdhbWVfaWQsIHBsYXlfaWQpICU+JQ0KICBhcnJhbmdlKGdhbWVfaWQsIHBsYXlfaWQpICU+JQ0KICBtdXRhdGUocGxheV9pZHggPSByb3dfbnVtYmVyKCkpDQoNCmFwbV9sb25nIDwtIGFwbV9sb25nICU+JQ0KICBsZWZ0X2pvaW4ocGxheV9pbmRleCwgYnkgPSBjKCJnYW1lX2lkIiwgInBsYXlfaWQiKSkNCg0KWCA8LSBzcGFyc2VNYXRyaXgoDQogIGkgPSBhcG1fbG9uZyRwbGF5X2lkeCwNCiAgaiA9IGFwbV9sb25nJHBsYXllcl9pZHgsDQogIHggPSBhcG1fbG9uZyRzaWduLA0KICBkaW1zID0gYyhucm93KHBsYXlfaW5kZXgpLCBucm93KHBsYXllcl9pbmRleCkpDQopDQoNCnkgPC0gcGJwMjIgJT4lDQogIGRpc3RpbmN0KGdhbWVfaWQsIHBsYXlfaWQsIGVwYSkgJT4lDQogIGFycmFuZ2UoZ2FtZV9pZCwgcGxheV9pZCkgJT4lDQogIHB1bGwoZXBhKQ0KDQoNCg0Kc3Rhbl9kYXRhIDwtIGxpc3QoDQogIE4gPSBucm93KFgpLA0KICBQID0gbmNvbChYKSwNCiAgWCA9IGFzLm1hdHJpeChYKSwNCiAgeSA9IHkNCikNCg0KZml0IDwtIHNhbXBsaW5nKA0KICBzdGFuX21vZGVsLA0KICBkYXRhID0gc3Rhbl9kYXRhLA0KICBjaGFpbnMgPSA0LA0KICBpdGVyID0gMTAwMCwNCiAgd2FybXVwID0gNTAwLA0KICByZWZyZXNoID0gMTAsICAgICAgICAjIDwtLSBwcmludHMgZXZlcnkgMTAgaXRlcmF0aW9ucw0KICB2ZXJib3NlID0gVFJVRSwgICAgICAjIDwtLSBleHRyYSBkaWFnbm9zdGljcw0KICBjb250cm9sID0gbGlzdChhZGFwdF9kZWx0YSA9IDAuOSkNCikNCg0KcG9zdCA8LSByc3Rhbjo6ZXh0cmFjdChmaXQpDQpiZXRhX21lYW4gPC0gY29sTWVhbnMocG9zdCRiZXRhKQ0KYmV0YV9zZCAgIDwtIGFwcGx5KHBvc3QkYmV0YSwgMiwgc2QpDQoNCnBsYXllcl9hcG0gPC0gcGxheWVyX2luZGV4ICU+JQ0KICBtdXRhdGUoDQogICAgYXBtID0gYmV0YV9tZWFuLA0KICAgIGFwbV9zZCA9IGJldGFfc2QsDQogICAgYXBtX3Blcl9wbGF5ID0gYXBtIC8gMTENCiAgKQ0KDQpwbGF5ZXJzIDwtIGxvYWRfcm9zdGVycyh5ZWFyKQ0KDQpwbGF5ZXJfYXBtX25hbWVzIDwtIHBsYXllcl9hcG0gJT4lIA0KICBsZWZ0X2pvaW4ocGxheWVycyAlPiUgc2VsZWN0KG5mbF9pZCA9IGdzaXNfaWQsIGZ1bGxfbmFtZSwgdGVhbSwgcG9zaXRpb24sIHNlYXNvbiksIGJ5ID0gYygibmZsX2lkIikpICU+JSANCiAgYXJyYW5nZShkZXNjKGFwbSkpDQoNCndyaXRlLmNzdihwbGF5ZXJfYXBtX25hbWVzLCBmaWxlID0gcGFzdGUwKCIuLi8uLi9kYXRhL3Byb2Nlc3NlZC9wbGF5ZXJfYXBtMl8iLCB5ZWFyLCAiLmNzdiIpKQ0KfQ0KYGBgDQoNCg0K</div>
 
 
 

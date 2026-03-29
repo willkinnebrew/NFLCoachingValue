@@ -157,7 +157,7 @@ player_apm_names <- player_apm %>%
   left_join(players %>% select(nfl_id = gsis_id, full_name, team, position, season), by = c("nfl_id")) %>% 
   arrange(desc(apm))
 
-write.csv(player_apm_names, file = paste0("../../data/processed/player_apm_", year, ".csv"))
+write.csv(player_apm_names, file = paste0("../../data/processed/player_apm2_", year, ".csv"))
 }
 ```
 
