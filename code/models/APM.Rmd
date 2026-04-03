@@ -30,10 +30,10 @@ parameters {
 
 model {
   // Priors
-  alpha ~ normal(0, 0.5);
-  tau   ~ normal(0, 0.5);
+  alpha ~ normal(0, 10);
+  tau   ~ normal(0, 10);
   beta  ~ normal(0, tau);
-  sigma ~ normal(0, 1);
+  sigma ~ normal(0, 10);
 
   // Likelihood
   y ~ normal(alpha + X * beta, sigma);

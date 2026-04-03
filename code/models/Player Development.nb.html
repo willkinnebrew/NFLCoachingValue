@@ -1791,13 +1791,6 @@ identifiers.</p>
 <pre class="r"><code>players_pfr &lt;- load_players(file_type = getOption(&quot;nflreadr.prefer&quot;, default = &quot;rds&quot;)) %&gt;% 
   select(pfr_id, nfl_id = gsis_id, draft_year, draft_pick, rookie_season)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTm90ZTogbmZscmVhZHIgY2FjaGVzIChpLmUuLCBzdG9yZXMgYSBzYXZlZCB2ZXJzaW9uKSBkYXRhIGJ5IGRlZmF1bHQuXG5JZiB5b3UgZXhwZWN0IGRpZmZlcmVudCBvdXRwdXQgdHJ5IG9uZSBvZiB0aGUgZm9sbG93aW5nOlxu4oS5IFJlc3RhcnQgeW91ciBSIFNlc3Npb24gb3JcbuKEuSBSdW4gYG5mbHJlYWRyOjouY2xlYXJfY2FjaGUoKWAuXG5UbyBkaXNhYmxlIHRoaXMgd2FybmluZywgcnVuIGBvcHRpb25zKG5mbHJlYWRyLnZlcmJvc2UgPSBGQUxTRSlgIG9yIGFkZCBpdCB0byB5b3VyIC5ScHJvZmlsZVxuIn0= -->
-<pre><code>Note: nflreadr caches (i.e., stores a saved version) data by default.
-If you expect different output try one of the following:
-ℹ Restart your R Session or
-ℹ Run `nflreadr::.clear_cache()`.
-To disable this warning, run `options(nflreadr.verbose = FALSE)` or add it to your .Rprofile</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Getting snap counts for all player-seasons in our time span.</p>
@@ -1810,8 +1803,8 @@ To disable this warning, run `options(nflreadr.verbose = FALSE)` or add it to yo
   summarise(n_snaps = sum(n_snaps)) %&gt;% 
   left_join(players_pfr, by = c(&quot;pfr_player_id&quot; = &quot;pfr_id&quot;))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCBoYXMgcmVncm91cGVkIHRoZSBvdXRwdXQuXG4ifQ== -->
-<pre><code>`summarise()` has regrouped the output.</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiYHN1bW1hcmlzZSgpYCBoYXMgZ3JvdXBlZCBvdXRwdXQgYnkgJ3Bmcl9wbGF5ZXJfaWQnLiBZb3UgY2FuIG92ZXJyaWRlIHVzaW5nIHRoZSBgLmdyb3Vwc2AgYXJndW1lbnQuXG4ifQ== -->
+<pre><code>`summarise()` has grouped output by &#39;pfr_player_id&#39;. You can override using the `.groups` argument.</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1838,7 +1831,7 @@ data.</p>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheWVyX21vZGVsX2RhdGEgPC0gcGxheWVyX2FwbSAlPiVcbiAgYXJyYW5nZShuZmxfaWQsIHNlYXNvbikgJT4lXG4gIGdyb3VwX2J5KG5mbF9pZCkgJT4lXG4gIG11dGF0ZShcbiAgICBhcG1fbGFnMSA9IGxhZyhhcG0pLFxuICAgIGV4cF9sYWcxID0gbGFnKGV4cGVyaWVuY2UpLFxuICAgIHNuYXBzX2xhZzEgPSBsYWcobl9zbmFwcylcbiAgKSAlPiVcbiAgdW5ncm91cCgpICU+JVxuICBmaWx0ZXIoIWlzLm5hKGFwbV9sYWcxKSwgIWlzLm5hKGV4cF9sYWcxKSwgIWlzLm5hKGRyYWZ0X3BpY2spKVxuXG5hcG1fbW9kZWwgPC0gbG0oXG4gIGFwbSB+IGFwbV9sYWcxICtcbiAgICAgICAgZXhwX2xhZzEgK1xuICAgICAgICBJKGV4cF9sYWcxXjIpICtcbiAgICAgICAgZHJhZnRfcGljayArXG4gICAgICAgIGxvZyhzbmFwc19sYWcxICsgMSkgK1xuICAgICAgICBsb2cobl9zbmFwcyArIDEpICsgXG4gICAgICAgIGV4cGVyaWVuY2UgK1xuICAgICAgICBwb3NpdGlvbixcbiAgZGF0YSA9IHBsYXllcl9tb2RlbF9kYXRhXG4pXG5cbnBsYXllcl9tb2RlbF9kYXRhIDwtIHBsYXllcl9tb2RlbF9kYXRhICU+JVxuICBtdXRhdGUocHJlZGljdGVkX2FwbSA9IHByZWRpY3QoYXBtX21vZGVsKSkgJT4lIFxuICBtdXRhdGUocmVzaWR1YWxfYXBtID0gYXBtIC0gcHJlZGljdGVkX2FwbSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxheWVyX21vZGVsX2RhdGEgPC0gcGxheWVyX2FwbSAlPiVcbiAgYXJyYW5nZShuZmxfaWQsIHNlYXNvbikgJT4lXG4gIGdyb3VwX2J5KG5mbF9pZCkgJT4lXG4gIG11dGF0ZShcbiAgICBhcG1fbGFnMSA9IGxhZyhhcG0pLFxuICAgIGV4cF9sYWcxID0gbGFnKGV4cGVyaWVuY2UpLFxuICAgIHNuYXBzX2xhZzEgPSBsYWcobl9zbmFwcylcbiAgKSAlPiVcbiAgdW5ncm91cCgpICU+JVxuICBmaWx0ZXIoIWlzLm5hKGFwbV9sYWcxKSwgIWlzLm5hKGV4cF9sYWcxKSwgIWlzLm5hKGRyYWZ0X3BpY2spKVxuXG5hcG1fbW9kZWwgPC0gbG0oXG4gIGFwbSB+IGFwbV9sYWcxICtcbiAgICAgICAgZXhwX2xhZzEgK1xuICAgICAgICBJKGV4cF9sYWcxXjIpICtcbiAgICAgICAgZHJhZnRfcGljayArXG4gICAgICAgIGxvZyhzbmFwc19sYWcxICsgMSkgK1xuICAgICAgICBuX3NuYXBzICsgXG4gICAgICAgIGV4cGVyaWVuY2UgK1xuICAgICAgICBwb3NpdGlvbixcbiAgZGF0YSA9IHBsYXllcl9tb2RlbF9kYXRhXG4pXG5cbnBsYXllcl9tb2RlbF9kYXRhIDwtIHBsYXllcl9tb2RlbF9kYXRhICU+JVxuICBtdXRhdGUocHJlZGljdGVkX2FwbSA9IHByZWRpY3QoYXBtX21vZGVsKSkgJT4lIFxuICBtdXRhdGUocmVzaWR1YWxfYXBtID0gYXBtIC0gcHJlZGljdGVkX2FwbSlcbmBgYCJ9 -->
 <pre class="r"><code>player_model_data &lt;- player_apm %&gt;%
   arrange(nfl_id, season) %&gt;%
   group_by(nfl_id) %&gt;%
@@ -1856,7 +1849,7 @@ apm_model &lt;- lm(
         I(exp_lag1^2) +
         draft_pick +
         log(snaps_lag1 + 1) +
-        log(n_snaps + 1) + 
+        n_snaps + 
         experience +
         position,
   data = player_model_data
@@ -1934,8 +1927,8 @@ apm_test &lt;- player_model_data %&gt;%
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KHBsYXllcl9kZXZfc2NvcmUsIFwiLi4vLi4vZGF0YS9wcm9jZXNzZWQvcGxheWVyX2Rldl9zY29yZS5jc3ZcIilcbmBgYCJ9 -->
-<pre class="r"><code>write.csv(player_dev_score, &quot;../../data/processed/player_dev_score.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KHBsYXllcl9kZXZfc2NvcmUsIFwiLi4vLi4vZGF0YS9wcm9jZXNzZWQvcGxheWVyX2Rldl9zY29yZTIuY3N2XCIpXG5gYGAifQ== -->
+<pre class="r"><code>write.csv(player_dev_score, &quot;../../data/processed/player_dev_score2.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
