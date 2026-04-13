@@ -1,0 +1,127 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(nflfastR)
+library(nflreadr)
+library(gt)
+library(purrr)
+```
+
+
+```{r}
+best_coaches <- read.csv("../../data/processed/total_coach_scores.csv")
+best_seasons <- read.csv("../../data/processed/best_season_scores.csv")
+scores <- read.csv("../../data/processed/season_scores.csv")
+```
+
+```{r}
+teams <- nflreadr::load_teams() %>% 
+  select(team = team_abbr, team_logo_espn, team_color) %>% 
+  mutate(team = case_when(
+    team == "OAK" ~ "LV",
+    team == "SD" ~ "LAC", 
+    team == "STL" ~ "LA",
+    team == "WAS" ~ "WSH",
+    .default = team
+  )) %>% 
+  mutate(team = ifelse(team == "LA", "LAR", team))
+
+coach_latest_team <- scores %>% 
+  filter(season > 2016, season < 2026) %>% 
+  pivot_longer(
+    cols = c(coach, offense, defense),
+    names_to = "role",
+    values_to = "coach_name"
+  ) %>% 
+  separate_rows(coach_name, sep = ",") %>% 
+  mutate(coach_name = str_trim(coach_name)) %>% 
+  filter(!is.na(coach_name), coach_name != "") %>% 
+  group_by(coach_name) %>% 
+  slice_max(season, with_ties = FALSE) %>% 
+  ungroup() %>% 
+  select(coach_name, team)
+
+table_data <- best_coaches %>% 
+  left_join(coach_latest_team, by = "coach_name") %>% 
+  rename(latest_team = team) %>% 
+  left_join(teams, by = c("latest_team" = "team"))
+
+logos_df <- scores %>% 
+  filter(season > 2016, season < 2026) %>% 
+  pivot_longer(
+    cols = c(coach, offense, defense),
+    names_to = "role",
+    values_to = "coach_name"
+  ) %>% 
+  separate_rows(coach_name, sep = ",") %>% 
+  mutate(coach_name = str_trim(coach_name)) %>% 
+  filter(!is.na(coach_name), coach_name != "") %>% 
+  distinct(coach_name, team) %>% 
+  left_join(teams, by = c("team")) %>% 
+  group_by(coach_name) %>% 
+  summarise(
+    logos = paste0(team_logo_espn, collapse = " "),
+    .groups = "drop"
+  )
+
+final_table <- table_data %>% 
+  left_join(logos_df, by = "coach_name") %>% 
+  arrange(desc(total_score)) %>% 
+  select(rank, coach_name, seasons, total_score, logos, team_color)
+```
+
+
+```{r}
+# Build GT table
+gt_tbl <- final_table %>% 
+  gt() %>% 
+  
+  # Render logos
+  text_transform(
+    locations = cells_body(columns = logos),
+    fn = function(x) {
+      map(x, ~ {
+        urls <- strsplit(.x, " ")[[1]]
+        paste0(
+          web_image(url = urls, height = 25),
+          collapse = " "
+        )
+      })
+    }
+  ) %>% 
+  
+  cols_label(
+    coach_name = "Coach",
+    seasons = "Seasons",
+    total_score = "Score",
+    logos = "Teams"
+  )
+
+# Apply row-wise coloring to match LEFTMOST logo
+for (i in seq_len(nrow(final_table))) {
+  gt_tbl <- gt_tbl %>% 
+    tab_style(
+      style = cell_text(color = final_table$team_color[i]),
+      locations = cells_body(
+        rows = i,
+        columns = c(coach_name, total_score)
+      )
+    )
+}
+
+# Final polish
+gt_tbl <- gt_tbl %>% 
+  cols_align(align = "center", logos) %>% 
+  fmt_number(columns = total_score, decimals = 2) %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = coach_name)
+  ) %>% 
+  cols_hide(columns = c(team_color, rank))
+
+gt_tbl
+```

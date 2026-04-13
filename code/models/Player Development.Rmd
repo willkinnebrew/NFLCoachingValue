@@ -12,7 +12,7 @@ library(nflreadr)
 ```{r}
 folder <- "../../data/processed/"
 
-files <- list.files(folder, pattern = "^player_apm_.*\\.csv$", full.names = TRUE)
+files <- list.files(folder, pattern = "^player_apm2_.*\\.csv$", full.names = TRUE)
 
 years <- c()
 
@@ -23,7 +23,7 @@ for (file in files) {
   player_apm_all <- player_apm_all %>% 
     bind_rows(assign(df_name, read.csv(file)))
 
-  year <- as.numeric(sub("player_apm_", "", df_name))
+  year <- as.numeric(sub("player_apm2_", "", df_name))
   years <- c(years, year)
 }
 ```
@@ -54,7 +54,15 @@ players <- player_apm_all %>%
 ```{r}
 player_apm <- player_apm_all %>% 
   left_join(snaps, by = c("nfl_id", "season")) %>% 
-  mutate(experience = season - rookie_season)
+  mutate(experience = season - rookie_season) %>% 
+  mutate(team = case_when(
+    team == "OAK" ~ "LV",
+    team == "SD" ~ "LAC", 
+    team == "STL" ~ "LA",
+    team == "WAS" ~ "WSH",
+    .default = team
+  )) %>% 
+  mutate(team = ifelse(team == "LA", "LAR", team))
 ```
 
 

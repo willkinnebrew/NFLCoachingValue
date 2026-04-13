@@ -39,11 +39,11 @@ scores <- team_seasons %>%
   left_join(division_game_score %>% select(season, team, coach, division_win_percentile)) %>% 
   rowwise() %>%
   mutate(score = sum(c_across(6:last_col()))) %>%
-  ungroup()
+  ungroup() %>% 
+  distinct()
 ```
 
 ```{r}
-# best coaches since x year
 best_coaches <- scores %>% 
   filter(season > 2016, season < 2026) %>% 
   pivot_longer(
@@ -54,24 +54,29 @@ best_coaches <- scores %>%
   separate_rows(coach_name, sep = ",") %>% 
   mutate(coach_name = str_trim(coach_name)) %>% 
   filter(!is.na(coach_name), coach_name != "") %>% 
+  
   # Assign weight by role
   mutate(score_weighted = case_when(
-    role == "coach"   ~ score,      # head coach full score
-    role %in% c("offense", "defense") ~ score * 0.25,  # assistants get half
+    role == "coach" ~ score,
+    role %in% c("offense", "defense") ~ score * 0.25,
     TRUE ~ score
   )) %>% 
+  
   group_by(coach_name) %>% 
   summarise(
-    seasons = n(),
+    seasons = n_distinct(season),
     total_score = sum(score_weighted, na.rm = TRUE),
     avg_score = total_score / seasons,
+    
+    # NEW: team tracking
+    n_teams = n_distinct(team),
+    teams = paste(sort(unique(team)), collapse = ", "),
+    
     .groups = "drop"
   ) %>% 
   arrange(desc(avg_score)) %>% 
   mutate(rank = row_number()) %>% 
-  select(rank, coach_name, seasons, total_score)
-
-best_coaches
+  select(rank, coach_name, seasons, n_teams, teams, total_score)
 ```
 
 ```{r}
