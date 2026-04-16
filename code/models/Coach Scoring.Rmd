@@ -58,7 +58,7 @@ best_coaches <- scores %>%
   # Assign weight by role
   mutate(score_weighted = case_when(
     role == "coach" ~ score,
-    role %in% c("offense", "defense") ~ score * 0.25,
+    role %in% c("offense", "defense") ~ score * 0.5,
     TRUE ~ score
   )) %>% 
   

@@ -120,9 +120,9 @@ ggplot(coaches_bs_results, aes(y = coach)) +
   geom_point(aes(x = mean_bs), color = "darkred") +
   theme_minimal() +
   labs(
-    x = "Bootstrap 95% CI of WP Change on 4th Downs",
+    x = "Bootstrap 95% CI of WP Change with <2min in Half",
     y = "Coach",
-    title = "Bootstrap Confidence Intervals by Coach - WP Added on 4th Downs",
+    title = "Bootstrap Confidence Intervals by Coach - WP Added with <2min Left",
     subtitle = "All HC During 2025 Season"
   ) +
   theme(axis.text.y = element_text(size = 8))

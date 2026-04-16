@@ -16,6 +16,7 @@ library(purrr)
 best_coaches <- read.csv("../../data/processed/total_coach_scores.csv")
 best_seasons <- read.csv("../../data/processed/best_season_scores.csv")
 scores <- read.csv("../../data/processed/season_scores.csv")
+coaches <- read.csv("../../data/raw/coaches.csv")
 ```
 
 ```{r}
@@ -76,8 +77,13 @@ final_table <- table_data %>%
 
 
 ```{r}
+# Keep only top 10
+final_table_top10 <- final_table %>%
+  arrange(desc(total_score)) %>% 
+  slice_head(n = 10)
+
 # Build GT table
-gt_tbl <- final_table %>% 
+gt_tbl <- final_table_top10 %>% 
   gt() %>% 
   
   # Render logos
@@ -101,11 +107,11 @@ gt_tbl <- final_table %>%
     logos = "Teams"
   )
 
-# Apply row-wise coloring to match LEFTMOST logo
-for (i in seq_len(nrow(final_table))) {
+# Apply row-wise coloring
+for (i in seq_len(nrow(final_table_top10))) {
   gt_tbl <- gt_tbl %>% 
     tab_style(
-      style = cell_text(color = final_table$team_color[i]),
+      style = cell_text(color = final_table_top10$team_color[i]),
       locations = cells_body(
         rows = i,
         columns = c(coach_name, total_score)
@@ -124,4 +130,290 @@ gt_tbl <- gt_tbl %>%
   cols_hide(columns = c(team_color, rank))
 
 gt_tbl
+
+gtsave(gt_tbl, "../../output/tables/top10_coaches_since2017.png")
+```
+
+```{r}
+best_seasons_tbl <- scores %>% 
+  filter(season > 2016) %>% 
+  group_by(season, team, coach, offense, defense) %>% 
+  summarise(score = mean(score), .groups = "drop") %>% 
+  arrange(desc(score)) %>% 
+  mutate(rank = row_number()) %>% 
+  
+  # Join team logos/colors
+  left_join(teams, by = c("team")) %>% 
+  
+  # Keep only what we want
+  select(
+    rank,
+    logos = team_logo_espn,
+    team,
+    season,
+    score,
+    coach,
+    offense,
+    defense,
+    team_color
+  ) %>% 
+  
+  # Optional: top 10
+  slice_head(n = 10)
+
+best_seasons_tbl <- best_seasons_tbl %>%
+  mutate(team_color = ifelse(is.na(team_color), "black", team_color))
+
+# -------------------------------
+# Build GT table
+# -------------------------------
+gt_tbl <- best_seasons_tbl %>% 
+  gt() %>% 
+  
+  # Render logos
+  text_transform(
+    locations = cells_body(columns = logos),
+    fn = function(x) {
+      map(x, ~ web_image(url = .x, height = 30))
+    }
+  ) %>% 
+  
+  cols_label(
+    logos = "",
+    team = "Team",
+    season = "Season",
+    score = "Score",
+    coach = "Head Coach",
+    offense = "OC",
+    defense = "DC"
+  )
+
+# -------------------------------
+# Row-wise coloring (team color)
+# -------------------------------
+for (i in seq_len(nrow(best_seasons_tbl))) {
+  gt_tbl <- gt_tbl %>% 
+    tab_style(
+      style = cell_text(color = best_seasons_tbl$team_color[i]),
+      locations = cells_body(
+        rows = i,
+        columns = c(team, score, coach, offense, defense, score)
+      )
+    )
+}
+
+# -------------------------------
+# Final polish
+# -------------------------------
+gt_tbl <- gt_tbl %>% 
+  cols_align(align = "center", logos) %>% 
+  fmt_number(columns = score, decimals = 2) %>% 
+  cols_hide(columns = c(team_color)) %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = coach)
+  )
+
+gt_tbl
+gtsave(gt_tbl, "../../output/tables/top10_seasons_since2017.png")
+
+```
+
+```{r}
+best_seasons_tbl <- scores %>% 
+  filter(season == 2025) %>% 
+  group_by(season, team, coach, offense, defense) %>% 
+  summarise(score = mean(score), .groups = "drop") %>% 
+  arrange(desc(score)) %>% 
+  mutate(rank = row_number()) %>% 
+  
+  # Join team logos/colors
+  left_join(teams, by = c("team")) %>% 
+  
+  # Keep only what we want
+  select(
+    rank,
+    logos = team_logo_espn,
+    team,
+    season,
+    score,
+    coach,
+    offense,
+    defense,
+    team_color
+  ) %>% 
+  
+  # Optional: top 10
+  slice_head(n = 10)
+
+best_seasons_tbl <- best_seasons_tbl %>%
+  mutate(team_color = ifelse(is.na(team_color), "black", team_color))
+
+# -------------------------------
+# Build GT table
+# -------------------------------
+gt_tbl <- best_seasons_tbl %>% 
+  gt() %>% 
+  
+  # Render logos
+  text_transform(
+    locations = cells_body(columns = logos),
+    fn = function(x) {
+      map(x, ~ web_image(url = .x, height = 30))
+    }
+  ) %>% 
+  
+  cols_label(
+    logos = "",
+    team = "Team",
+    season = "Season",
+    score = "Score",
+    coach = "Head Coach",
+    offense = "OC",
+    defense = "DC"
+  )
+
+# -------------------------------
+# Row-wise coloring (team color)
+# -------------------------------
+for (i in seq_len(nrow(best_seasons_tbl))) {
+  gt_tbl <- gt_tbl %>% 
+    tab_style(
+      style = cell_text(color = best_seasons_tbl$team_color[i]),
+      locations = cells_body(
+        rows = i,
+        columns = c(team, score, coach, offense, defense, score)
+      )
+    )
+}
+
+# -------------------------------
+# Final polish
+# -------------------------------
+gt_tbl <- gt_tbl %>% 
+  cols_align(align = "center", logos) %>% 
+  fmt_number(columns = score, decimals = 2) %>% 
+  cols_hide(columns = c(team_color)) %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = coach)
+  )
+
+gt_tbl
+gtsave(gt_tbl, "../../output/tables/top10_2025.png")
+```
+
+```{r}
+best_seasons_tbl <- scores %>% 
+  filter(season == 2025) %>% 
+  group_by(season, team, coach, offense, defense) %>% 
+  summarise(score = mean(score), .groups = "drop") %>% 
+
+  group_by(team) %>% 
+  slice_head(n = 1) %>% 
+  ungroup() %>% 
+  arrange(desc(score)) %>% 
+  mutate(rank = row_number()) %>% 
+  
+  left_join(teams, by = "team") %>% 
+  
+  # Keep only what we want
+  select(
+    rank,
+    logos = team_logo_espn,
+    team,
+    season,
+    score,
+    coach,
+    offense,
+    defense,
+    team_color
+  ) %>% 
+  
+  # Optional: top 10
+  slice(1:32)
+
+best_seasons_tbl <- best_seasons_tbl %>%
+  mutate(team_color = ifelse(is.na(team_color), "black", team_color))
+
+# -------------------------------
+# Build GT table
+# -------------------------------
+gt_tbl <- best_seasons_tbl %>% 
+  gt() %>% 
+  
+  # Render logos
+  text_transform(
+    locations = cells_body(columns = logos),
+    fn = function(x) {
+      map(x, ~ web_image(url = .x, height = 30))
+    }
+  ) %>% 
+  
+  cols_label(
+    logos = "",
+    team = "Team",
+    season = "Season",
+    score = "Score",
+    coach = "Head Coach",
+    offense = "OC",
+    defense = "DC"
+  )
+
+# -------------------------------
+# Row-wise coloring (team color)
+# -------------------------------
+for (i in seq_len(nrow(best_seasons_tbl))) {
+  gt_tbl <- gt_tbl %>% 
+    tab_style(
+      style = cell_text(color = best_seasons_tbl$team_color[i]),
+      locations = cells_body(
+        rows = i,
+        columns = c(team, score, coach, offense, defense, score)
+      )
+    )
+}
+
+# -------------------------------
+# Final polish
+# -------------------------------
+gt_tbl <- gt_tbl %>% 
+  cols_align(align = "center", logos) %>% 
+  fmt_number(columns = score, decimals = 2) %>% 
+  cols_hide(columns = c(team_color)) %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = coach)
+  )
+
+gt_tbl
+gtsave(gt_tbl, "../../output/tables/bot10_2025.png")
+```
+
+```{r}
+fired <- c("TEN", "NYG", "ATL", "CLE", "LV", "BUF", "ARI", "BAL", "MIA")
+cur_coaches <- coaches %>% 
+  filter(Year == 2025) %>% 
+  filter(!team%in%fired) %>% 
+  pull(Coach)
+
+best_available <- best_coaches %>% 
+  filter(!coach_name%in%cur_coaches) %>% 
+  mutate(score = total_score/seasons)
+```
+
+```{r}
+hc_ever <- coaches %>% distinct(Coach) %>% pull()
+```
+
+```{r}
+best_avail_asst <- best_available %>% 
+  filter(!coach_name%in%hc_ever) %>% 
+  filter(seasons > 2)
+```
+
+```{r}
+best_avail_former_hc <- best_available %>% 
+  filter(coach_name%in%hc_ever) %>% 
+  filter(seasons > 2)
 ```
