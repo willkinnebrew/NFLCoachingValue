@@ -77,16 +77,13 @@ final_table <- table_data %>%
 
 
 ```{r}
-# Keep only top 10
 final_table_top10 <- final_table %>%
   arrange(desc(total_score)) %>% 
   slice_head(n = 10)
 
-# Build GT table
 gt_tbl <- final_table_top10 %>% 
   gt() %>% 
   
-  # Render logos
   text_transform(
     locations = cells_body(columns = logos),
     fn = function(x) {
@@ -107,7 +104,6 @@ gt_tbl <- final_table_top10 %>%
     logos = "Teams"
   )
 
-# Apply row-wise coloring
 for (i in seq_len(nrow(final_table_top10))) {
   gt_tbl <- gt_tbl %>% 
     tab_style(
@@ -119,7 +115,6 @@ for (i in seq_len(nrow(final_table_top10))) {
     )
 }
 
-# Final polish
 gt_tbl <- gt_tbl %>% 
   cols_align(align = "center", logos) %>% 
   fmt_number(columns = total_score, decimals = 2) %>% 

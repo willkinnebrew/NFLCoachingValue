@@ -18,7 +18,6 @@ files <- list.files(folder, pattern = "^player_apm_.*\\.csv$", full.names = TRUE
 
 years <- c()
 
-# loop through files and create a data frame for each one
 player_apm_all <- data.frame()
 for (file in files) {
   df_name <- tools::file_path_sans_ext(basename(file))
@@ -34,17 +33,17 @@ for (file in files) {
 player_apm_all %>% 
   ggplot(aes(x = apm)) +
   geom_histogram(
-    binwidth = 0.0005,              # adjust to your data range
-    fill = "#1f77b4",            # nice blue fill
-    color = "white",              # white borders
-    alpha = 0.9                   # slightly transparent
+    binwidth = 0.0005,           
+    fill = "#1f77b4",
+    color = "white",     
+    alpha = 0.9            
   ) +
   labs(
     title = "Distribution of Player APM",
     x = "Adjusted Plus-Minus (APM)",
     y = "Count"
   ) +
-  theme_minimal(base_size = 14) +  # clean theme with readable text
+  theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(face = "bold", hjust = 0.5),
     axis.title = element_text(face = "bold")

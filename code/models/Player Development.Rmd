@@ -16,7 +16,6 @@ files <- list.files(folder, pattern = "^player_apm2_.*\\.csv$", full.names = TRU
 
 years <- c()
 
-# loop through files and create a data frame for each one
 player_apm_all <- data.frame()
 for (file in files) {
   df_name <- tools::file_path_sans_ext(basename(file))
@@ -118,7 +117,6 @@ apm_test <- player_model_data %>%
     by = c("team", "season")
   ) %>%
   filter(!is.na(n_snaps), !is.na(coach)) %>%
-  # Exclude Special Teams positions
   filter(side %in% c("Offense", "Defense")) %>%
   group_by(coach, season, side) %>%
   summarise(
@@ -132,7 +130,6 @@ apm_test <- player_model_data %>%
     values_from = c(apm_diff, n_players),
     names_glue = "{side}_{.value}"
   ) %>%
-  # total only counts Offense + Defense
   mutate(total_apm_diff = Offense_apm_diff + Defense_apm_diff) %>%
   arrange(desc(total_apm_diff))
 ```

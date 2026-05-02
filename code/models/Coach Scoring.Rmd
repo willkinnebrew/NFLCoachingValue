@@ -55,7 +55,6 @@ best_coaches <- scores %>%
   mutate(coach_name = str_trim(coach_name)) %>% 
   filter(!is.na(coach_name), coach_name != "") %>% 
   
-  # Assign weight by role
   mutate(score_weighted = case_when(
     role == "coach" ~ score,
     role %in% c("offense", "defense") ~ score * 0.5,
@@ -68,7 +67,6 @@ best_coaches <- scores %>%
     total_score = sum(score_weighted, na.rm = TRUE),
     avg_score = total_score / seasons,
     
-    # NEW: team tracking
     n_teams = n_distinct(team),
     teams = paste(sort(unique(team)), collapse = ", "),
     
