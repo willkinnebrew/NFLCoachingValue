@@ -171,7 +171,6 @@ server <- function(input, output, session) {
     
   })
   
-  # recalculate weighted score
   weighted_scores <- reactive({
     
     df <- scores %>%
@@ -257,7 +256,6 @@ server <- function(input, output, session) {
       group_by(season, team, role) %>%
       mutate(order = row_number()) %>%
       
-      # KEEP ONLY LAST coach in HC role
       filter(!(role == "coach" & order != max(order))) %>%
       
       select(-order) %>%
@@ -280,14 +278,12 @@ server <- function(input, output, session) {
       group_by(coach_name, season) %>%
       summarise(score = sum(score_weighted, na.rm = TRUE), .groups = "drop")
     
-    # WIDE FORMAT (season columns)
     df_wide <- df %>%
       pivot_wider(
         names_from = season,
         values_from = score
       )
     
-    # TOTAL SCORE
     df_total <- df %>%
       group_by(coach_name) %>%
       summarise(
@@ -306,7 +302,6 @@ server <- function(input, output, session) {
       left_join(df_total, by = "coach_name") %>%
       arrange(desc(total_score))
     
-    # Top / Bottom logic
     if (input$rank_direction == "top") {
       df_final %>% slice_head(n = input$top_n)
     } else {
@@ -389,7 +384,6 @@ server <- function(input, output, session) {
       
       
       
-      # Row coloring
       for (i in seq_len(nrow(df))) {
         gt_tbl <- gt_tbl %>%
           tab_style(
