@@ -68,12 +68,34 @@ ui <- fluidPage(
         inline = TRUE
       ),
       
-      numericInput("top_n", "Top N", value = 10, min = 1, max = 50),
+      numericInput("top_n", "Top/Bottom N", value = 10, min = 1),
       
       selectInput("view_type",
                   "View",
-                  choices = c("Best Coaches (Cumulative)", 
+                  choices = c("Best Coaches", 
                               "Best Seasons")),
+      radioButtons(
+        "coach_type",
+        "Coach Type",
+        choices = c(
+          "All Coaches" = "all",
+          "Head Coaches Only" = "hc",
+          "Non-Head Coaches Only" = "non_hc"
+        ),
+        selected = "all",
+        inline = TRUE
+      ),
+      
+      radioButtons(
+        "agg_type",
+        "Aggregation",
+        choices = c(
+          "Cumulative" = "sum",
+          "Average" = "mean"
+        ),
+        selected = "sum",
+        inline = TRUE
+      ),
       
       hr(),
       fluidRow(
@@ -100,12 +122,12 @@ ui <- fluidPage(
       sliderInput("w_player_dev", "Overall Player Dev", 0, 2, 1, step = 0.1),
       sliderInput("w_off_dev", "Offensive Player Dev", 0, 2, 1, step = 0.1),
       sliderInput("w_def_dev", "Defensive Player Dev", 0, 2, 1, step = 0.1),
-      sliderInput("w_win", "Win %", 0, 2, 1, step = 0.1),
-      sliderInput("w_playoff", "Playoffs", 0, 2, 1, step = 0.1),
       sliderInput("w_close", "Close Games", 0, 2, 1, step = 0.1),
-      sliderInput("w_aggressive", "Aggressiveness", 0, 2, 1, step = 0.1),
+      sliderInput("w_aggressive", "Fourth Downs", 0, 2, 1, step = 0.1),
       sliderInput("w_twomin", "2-Minute", 0, 2, 1, step = 0.1),
-      sliderInput("w_division", "Division", 0, 2, 1, step = 0.1),
+      sliderInput("w_win", "Regular Season", 0, 2, 1, step = 0.1),
+      sliderInput("w_playoff", "Playoffs", 0, 2, 1, step = 0.1),
+      sliderInput("w_division", "Division Games", 0, 2, 1, step = 0.1),
       
       hr()
     ),
@@ -197,6 +219,8 @@ server <- function(input, output, session) {
       mutate(coach_name = str_trim(coach_name)) %>%
       filter(!is.na(coach_name), coach_name != "")
     
+    
+    
     latest_team <- df %>%
       group_by(coach_name) %>%
       slice_max(season, with_ties = FALSE) %>%
@@ -228,25 +252,65 @@ server <- function(input, output, session) {
       ) %>%
       separate_rows(coach_name, sep = ",") %>%
       mutate(coach_name = str_trim(coach_name)) %>%
-      filter(!is.na(coach_name), coach_name != "") %>%
+      filter(!is.na(coach_name), coach_name != "") %>% 
+    
+      group_by(season, team, role) %>%
+      mutate(order = row_number()) %>%
       
+      # KEEP ONLY LAST coach in HC role
+      filter(!(role == "coach" & order != max(order))) %>%
+      
+      select(-order) %>%
+      ungroup()
+    
+    if (input$coach_type == "hc") {
+      df <- df %>% filter(role == "coach")
+    }
+    
+    if (input$coach_type == "non_hc") {
+      df <- df %>% filter(role != "coach")
+    }
+    
+    df <- df %>%
       mutate(score_weighted = case_when(
         role == "coach" ~ score,
         TRUE ~ score * 0.5
       )) %>%
       
+      group_by(coach_name, season) %>%
+      summarise(score = sum(score_weighted, na.rm = TRUE), .groups = "drop")
+    
+    # WIDE FORMAT (season columns)
+    df_wide <- df %>%
+      pivot_wider(
+        names_from = season,
+        values_from = score
+      )
+    
+    # TOTAL SCORE
+    df_total <- df %>%
       group_by(coach_name) %>%
       summarise(
         seasons = n_distinct(season),
-        total_score = sum(score_weighted, na.rm = TRUE),
+        
+        total_score = if (input$agg_type == "sum") {
+          sum(score, na.rm = TRUE)
+        } else {
+          mean(score, na.rm = TRUE)
+        },
+        
         .groups = "drop"
-      ) %>%
+      )
+    
+    df_final <- df_wide %>%
+      left_join(df_total, by = "coach_name") %>%
       arrange(desc(total_score))
     
+    # Top / Bottom logic
     if (input$rank_direction == "top") {
-      df %>% slice_head(n = input$top_n)
+      df_final %>% slice_head(n = input$top_n)
     } else {
-      df %>% slice_tail(n = input$top_n)
+      df_final %>% slice_tail(n = input$top_n)
     }
   })
   
@@ -266,6 +330,9 @@ server <- function(input, output, session) {
       df <- df %>% slice_tail(n = input$top_n)
     }
     
+    
+    
+    
     df
   })
   
@@ -274,7 +341,7 @@ server <- function(input, output, session) {
   # ---------------------------
   output$table <- render_gt({
     
-    if (input$view_type == "Best Coaches (Cumulative)") {
+    if (input$view_type == "Best Coaches") {
       
       meta <- coach_metadata()
       
@@ -286,8 +353,17 @@ server <- function(input, output, session) {
         left_join(meta$logos, by = "coach_name") %>%
         arrange(desc(total_score))
       
+      df <- df %>%
+        select(coach_name, seasons, logos, sort(names(.)[grepl("^\\d{4}$", names(.))]), total_score, everything())
+      
+      
       gt_tbl <- df %>%
         gt() %>%
+        
+        fmt_missing(
+          columns = everything(),
+          missing_text = ""
+        ) %>%
         
         text_transform(
           locations = cells_body(columns = logos),
@@ -304,11 +380,16 @@ server <- function(input, output, session) {
         
         cols_label(
           coach_name = "Coach",
-          seasons = "Seasons",
-          total_score = "Score",
-          logos = "Teams"
+          logos = "Teams",
+          total_score = "Total"
+        ) %>% 
+        cols_label(
+          total_score = if (input$agg_type == "sum") "Total Score" else "Average Score"
         )
       
+      
+      
+      # Row coloring
       for (i in seq_len(nrow(df))) {
         gt_tbl <- gt_tbl %>%
           tab_style(
@@ -321,14 +402,14 @@ server <- function(input, output, session) {
       }
       
       gt_tbl %>%
-        cols_align(align = "center", logos) %>%
-        fmt_number(columns = total_score, decimals = 2) %>%
+        fmt_number(columns = where(is.numeric), decimals = 2) %>%
+        fmt_number(columns = c(seasons), decimals = 0) %>%
+        cols_align(align = "center") %>%
         tab_style(
           style = cell_text(weight = "bold"),
-          locations = cells_body(columns = coach_name)
+          locations = cells_body(columns = c(coach_name, total_score))
         ) %>%
         cols_hide(columns = c(team_color, latest_team))
-      
     } else {
       
       df <- best_seasons() %>%
@@ -374,7 +455,7 @@ server <- function(input, output, session) {
       paste0("coach_results_", Sys.Date(), ".csv")
     },
     content = function(file) {
-      if (input$view_type == "Best Coaches (Cumulative)") {
+      if (input$view_type == "Best Coaches") {
         write.csv(best_coaches(), file, row.names = FALSE)
       } else {
         write.csv(best_seasons(), file, row.names = FALSE)

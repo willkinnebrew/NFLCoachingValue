@@ -5,7 +5,7 @@ account: willkinnebrew
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 17278738
-bundleId: 11938482
+bundleId: 11941636
 url: https://willkinnebrew.shinyapps.io/NFLCoachValue/
 version: 1
 asMultiple: FALSE
